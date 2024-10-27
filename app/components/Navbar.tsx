@@ -1,6 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useRef } from "react";
 
 const Navbar = () => {
   return (
@@ -35,18 +37,84 @@ const Navbar = () => {
             />
           </div>
           <div className="absolute h-fit w-fit right-1 md:right-1 lg:right-16 2xl:right-52">
-            <a
+            <button
               className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-red-600 text-2xl font-bold p-10 hidden md:flex"
-              href=""
+              onClick={() => {
+                const modal = document.getElementById('login_modal');
+                if (modal) {
+                  (modal as HTMLDialogElement).showModal();
+                }
+              }}
             >
               Login
-            </a>
-            <a
-              href=""
+            </button>
+            <button
               className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-red-600 text-2xl font-bold p-10 hidden md:flex"
+              onClick={() => {
+                const modal = document.getElementById('signup_modal');
+                if (modal) {
+                  (modal as HTMLDialogElement).showModal();
+                }
+              }}
             >
               Sign Up
-            </a>
+            </button>
+            {/* Signup Modal*/}
+            <dialog id="signup_modal" className="modal modal-bottom sm:modal-middle">
+              <div className="modal-box relative">
+                <div className="banner border-b-4 border-solid border-black flex p-2">
+                  <h2 className="font-bold text-6xl p-4 me-auto">Red Rater</h2>
+                  <Image 
+                    src="/DoubleT_BlkWht.png"
+                    alt="Black and white Texas Tech Double T"
+                    width={100}
+                    height={100}
+                    style={{ width: "20%", height: "20%" }}
+                  />
+                </div>
+                <div className="modal-action flex flex-col">
+                  <label className="input input-bordered flex items-center gap-2 mx-2">
+                    <input type="text" className="grow" placeholder="Texas Tech Email" />
+                  </label>
+                  <label className="input input-bordered flex items-center gap-2 my-2">
+                    <input type="text" className="grow" placeholder="Password" />
+                  </label>
+                  <button className="btn bg-red-600 hover:text-white hover:bg-black">Sign Up</button>
+                  <p className='self-center'>Already have an account? <a href='' className="text-red-600 underline">Login here</a></p>
+                </div>
+              </div>
+              <form method="dialog" className="modal-backdrop">
+                  <button>close</button>
+              </form>
+            </dialog>
+            {/* Login Modal */}
+            <dialog id="login_modal" className="modal modal-bottom sm:modal-middle">
+              <div className="modal-box relative">
+                <div className="banner border-b-4 border-solid border-black flex p-2">
+                  <h2 className="font-bold text-6xl p-4 me-auto">Red Rater</h2>
+                  <Image 
+                    src="/DoubleT_BlkWht.png"
+                    alt="Black and white Texas Tech Double T"
+                    width={100}
+                    height={100}
+                    style={{ width: "20%", height: "20%" }}
+                  />
+                </div>
+                <div className="modal-action flex flex-col">
+                  <label className="input input-bordered flex items-center gap-2 mx-2">
+                    <input type="text" className="grow" placeholder="Texas Tech Email" />
+                  </label>
+                  <label className="input input-bordered flex items-center gap-2 my-2">
+                    <input type="text" className="grow" placeholder="Password" />
+                  </label>
+                  <button className="btn bg-red-600 hover:text-white hover:bg-black">Login</button>
+                  <p className='self-center'>Don't have an account? <a href='' className="text-red-600 underline">Signup here</a></p>
+                </div>
+              </div>
+              <form method="dialog" className="modal-backdrop">
+                  <button>close</button>
+              </form>
+            </dialog>
           </div>
         </div>
         {/* Content goes here */}
