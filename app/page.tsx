@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
+import SearchBar from "./components/SearchBar";
 
 // Home Page
 export default function Home() {
@@ -21,8 +22,9 @@ export default function Home() {
       </div>
       <h1 className="text-5xl text-red-600 font-bold">Red Rater</h1>
       <p className="text-lg font-bold">Professor and Course Evaluation Tool</p>
-
-      <input type="text" />
+      <div className="w-96">
+        <SearchBar />
+      </div>
     </main>
   );
 }
