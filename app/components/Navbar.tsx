@@ -5,7 +5,7 @@ import React from "react";
 const Navbar = () => {
   return (
     // drawer: root container
-    <div className="drawer">
+    <div className="drawer fixed">
       {/* drawer-toggle: makes checkbox hidden and controls the drawer */}
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       {/* drawer-content: container for all page content */}

@@ -16,6 +16,10 @@ const config: Config = {
       screens: {
         xs: "430px",
       },
+
+      backgroundImage: {
+        hero: "url('/Hero.jpg')",
+      },
     },
   },
   plugins: [require("daisyui")],
