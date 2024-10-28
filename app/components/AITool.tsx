@@ -1,15 +1,33 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import AISearchBar from "./AISearchBar";
 
 const AITool = () => {
+  const [drawerOpen, setDrawerOpen] = useState(true);
+
+  const updateDrawer = () => {
+    setDrawerOpen(!drawerOpen);
+    console.log(drawerOpen);
+  };
   return (
     <div className="drawer drawer-end fixed z-40">
-      <input id="ai-drawer" type="checkbox" className="drawer-toggle" />
+      <input
+        id="ai-drawer"
+        type="checkbox"
+        className="drawer-toggle"
+        onChange={updateDrawer}
+      />
       <div className="drawer-content">
         <label
           htmlFor="ai-drawer"
-          className="btn btn-circle fixed bottom-2 right-2 h-20 w-20 bg-red-600 border-black z-40"
+          className={`btn btn-circle fixed h-20 w-20 bg-red-600 border-black z-40 lg:h-24 lg:w-24 2xl:h-32 2xl:w-32 hover:bg-red-600 hover:border-black transition-all
+            ${
+              drawerOpen
+                ? "bottom-5 right-5 md:bottom-10 md:right-16"
+                : "bottom-2 right-2 lg:bottom-3"
+            }
+          `}
         >
           <Image
             src="/DoubleT.png"
@@ -34,7 +52,7 @@ const AITool = () => {
             </h1>
           </div>
           <div className="bg-slate-200 h-full">Body</div>
-          <div className="bg-black w-full h-24 fixed bottom-0 left-0 flex items-center p-5">
+          <div className="bg-black w-full h-24 lg:h-32 2xl:h-36 fixed bottom-0 left-0 flex items-center p-5">
             <AISearchBar />
           </div>
         </div>

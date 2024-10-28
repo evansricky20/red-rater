@@ -10,7 +10,7 @@ const SearchBar = () => {
 
   return (
     <form className="h-fit w-full mr-10">
-      <label className="input input-bordered flex items-center gap-2 rounded-3xl bg-gray-400 h-10 sm:h-12 lg:h-14 w-4/5">
+      <label className="input input-bordered flex items-center gap-2 rounded-3xl bg-gray-400 h-10 sm:h-12 2xl:h-14 w-4/5">
         <input
           type="text"
           placeholder="Message Red Rater"
