@@ -75,26 +75,28 @@ const Navbar = () => {
                     style={{ width: "20%", height: "20%" }}
                   />
                 </div>
-                <div className="modal-action flex flex-col">
-                  <label className="input input-bordered flex items-center gap-2 mx-2">
-                    <input
-                      type="text"
-                      className="grow"
-                      placeholder="Texas Tech Email"
-                    />
-                  </label>
-                  <label className="input input-bordered flex items-center gap-2 my-2">
-                    <input
-                      type="text"
-                      className="grow"
-                      placeholder="Password"
-                    />
-                  </label>
-                  <button className="btn bg-red-600 hover:text-white hover:bg-black">
-                    Sign Up
+                <div className="modal-action flex flex-col w-full">
+                  <div>
+                    <label className="input input-bordered flex items-center gap-2 mb-4">
+                      <input
+                        type="text"
+                        className="grow"
+                        placeholder="Texas Tech Email"
+                      />
+                    </label>
+                    <label className="input input-bordered flex items-center gap-2 mb-4">
+                      <input
+                        type="text"
+                        className="grow"
+                        placeholder="Password"
+                      />
+                    </label>
+                    <button className="btn bg-red-600 w-full hover:text-white hover:bg-black">
+                    Signup
                   </button>
+                  </div>
                   <p className="self-center">
-                    Already have an account?{" "}
+                    Don't have an account?{" "}
                     <a href="" className="text-red-600 underline">
                       Login here
                     </a>
@@ -121,24 +123,26 @@ const Navbar = () => {
                     style={{ width: "20%", height: "20%" }}
                   />
                 </div>
-                <div className="modal-action flex flex-col">
-                  <label className="input input-bordered flex items-center gap-2 mx-2">
-                    <input
-                      type="text"
-                      className="grow"
-                      placeholder="Texas Tech Email"
-                    />
-                  </label>
-                  <label className="input input-bordered flex items-center gap-2 my-2">
-                    <input
-                      type="text"
-                      className="grow"
-                      placeholder="Password"
-                    />
-                  </label>
-                  <button className="btn bg-red-600 hover:text-white hover:bg-black">
+                <div className="modal-action flex flex-col w-full">
+                  <div>
+                    <label className="input input-bordered flex items-center gap-2 mb-4">
+                      <input
+                        type="text"
+                        className="grow"
+                        placeholder="Texas Tech Email"
+                      />
+                    </label>
+                    <label className="input input-bordered flex items-center gap-2 mb-4">
+                      <input
+                        type="text"
+                        className="grow"
+                        placeholder="Password"
+                      />
+                    </label>
+                    <button className="btn bg-red-600 w-full hover:text-white hover:bg-black">
                     Login
-                  </button>
+                    </button>
+                  </div>
                   <p className="self-center">
                     Don't have an account?{" "}
                     <a href="" className="text-red-600 underline">
