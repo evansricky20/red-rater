@@ -97,9 +97,21 @@ const Navbar = () => {
                   </div>
                   <p className="self-center">
                     Don't have an account?{" "}
-                    <a href="" className="text-red-600 underline">
+                    <button className="text-red-600 underline" onClick={() => {
+                      const currModal = document.getElementById("signup_modal") as HTMLDialogElement;
+                      const nextModal = document.getElementById("login_modal") as HTMLDialogElement;
+
+                      if (currModal && nextModal) { // Verify objects are not null
+                        if (currModal.open) {
+                          currModal.close();
+                        }
+                        if (!nextModal.open) {
+                          nextModal.showModal();
+                        }
+                      }
+                    }}>
                       Login here
-                    </a>
+                    </button>
                   </p>
                 </div>
               </div>
@@ -145,9 +157,21 @@ const Navbar = () => {
                   </div>
                   <p className="self-center">
                     Don't have an account?{" "}
-                    <a href="" className="text-red-600 underline">
+                    <button className="text-red-600 underline" onClick={() => {
+                      const currModal = document.getElementById("login_modal") as HTMLDialogElement;
+                      const nextModal = document.getElementById("signup_modal") as HTMLDialogElement;
+
+                      if (currModal && nextModal) { // Verify objects are not null
+                        if (currModal.open) {
+                          currModal.close();
+                        }
+                        if (!nextModal.open) {
+                          nextModal.showModal();
+                        }
+                      }
+                    }}>
                       Signup here
-                    </a>
+                    </button>
                   </p>
                 </div>
               </div>
@@ -175,18 +199,28 @@ const Navbar = () => {
             />
           </div>
           <div className="absolute z-50 top-28 left-16 pl-1 md:hidden">
-            <a
+            <button
               className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-white text-2xl font-bold p2 active:text-black"
-              href=""
+              onClick={() => {
+                const modal = document.getElementById("login_modal");
+                if (modal) {
+                  (modal as HTMLDialogElement).showModal();
+                }
+              }}
             >
               Login
-            </a>
-            <a
-              href=""
+            </button>
+            <button
               className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-white text-2xl font-bold p-2 active:text-black"
-            >
+              onClick={() => {
+                const modal = document.getElementById("signup_modal");
+                if (modal) {
+                  (modal as HTMLDialogElement).showModal();
+                }
+              }}
+           >
               Sign Up
-            </a>
+            </button>
           </div>
           <li className="pl-10 p-2 sm:pb-5 2xl:p-10">
             <Link
