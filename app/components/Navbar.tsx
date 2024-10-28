@@ -4,10 +4,143 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useRef } from "react";
 
+const Signup = () => {
+  return (
+    <dialog
+      id="signup_modal"
+      className="modal modal-bottom sm:modal-middle"
+    >
+      <div className="modal-box relative">
+        <div className="banner border-b-4 border-solid border-black flex p-2">
+          <h2 className="font-bold text-6xl p-4 me-auto">Red Rater</h2>
+          <Image
+            src="/DoubleT_BlkWht.png"
+            alt="Black and white Texas Tech Double T"
+            width={100}
+            height={100}
+            style={{ width: "20%", height: "20%" }}
+          />
+        </div>
+        <div className="modal-action flex flex-col w-full">
+          <div>
+            <label className="input input-bordered flex items-center gap-2 mb-4">
+              <input
+                type="text"
+                className="grow"
+                placeholder="Texas Tech Email"
+              />
+            </label>
+            <label className="input input-bordered flex items-center gap-2 mb-4">
+              <input
+                type="password"
+                className="grow"
+                placeholder="Password"
+              />
+            </label>
+            <button className="btn bg-red-600 w-full hover:text-white hover:bg-black">
+              Signup
+            </button>
+          </div>
+          <p className="self-center">
+            Don't have an account?{" "}
+            <button className="text-red-600 underline" onClick={() => {
+              const currModal = document.getElementById("signup_modal") as HTMLDialogElement;
+              const nextModal = document.getElementById("login_modal") as HTMLDialogElement;
+
+              if (currModal && nextModal) { // Verify objects are not null
+                if (currModal.open) {
+                  currModal.close();
+                }
+                if (!nextModal.open) {
+                  nextModal.showModal();
+                }
+              }
+            }}>
+              Login here
+            </button>
+          </p>
+        </div>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  )
+}
+
+const Login = () => {
+  return (
+    <dialog
+      id="login_modal"
+      className="modal modal-bottom sm:modal-middle"
+    >
+      <div className="modal-box relative">
+        <div className="banner border-b-4 border-solid border-black flex p-2">
+          <h2 className="font-bold text-6xl p-4 me-auto">Red Rater</h2>
+          <Image
+            src="/DoubleT_BlkWht.png"
+            alt="Black and white Texas Tech Double T"
+            width={100}
+            height={100}
+            style={{ width: "20%", height: "20%" }}
+          />
+        </div>
+        <div className="modal-action flex flex-col w-full">
+          <div>
+            <label className="input input-bordered flex items-center gap-2 mb-4">
+              <input
+                type="text"
+                className="grow"
+                placeholder="Texas Tech Email"
+              />
+            </label>
+            <label className="input input-bordered flex items-center gap-2 mb-4">
+              <input
+                type="password"
+                className="grow"
+                placeholder="Password"
+              />
+            </label>
+            <button className="btn bg-red-600 w-full hover:text-white hover:bg-black">
+              Login
+            </button>
+          </div>
+          <p className="self-center">
+            Don't have an account?{" "}
+            <button className="text-red-600 underline" onClick={() => {
+              const currModal = document.getElementById("login_modal") as HTMLDialogElement;
+              const nextModal = document.getElementById("signup_modal") as HTMLDialogElement;
+
+              if (currModal && nextModal) { // Verify objects are not null
+                if (currModal.open) {
+                  currModal.close();
+                }
+                if (!nextModal.open) {
+                  nextModal.showModal();
+                }
+              }
+            }}>
+              Signup here
+            </button>
+          </p>
+        </div>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  )
+}
+
 const Navbar = () => {
   return (
     // drawer: root container
     <div className="drawer fixed z-50">
+      {/* Signup Modal*/}
+      <Signup />
+      {/* Login Modal */}
+      <Login />
+
       {/* drawer-toggle: makes checkbox hidden and controls the drawer */}
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       {/* drawer-content: container for all page content */}
@@ -59,102 +192,6 @@ const Navbar = () => {
             >
               Sign Up
             </button>
-            {/* Signup Modal*/}
-            <dialog
-              id="signup_modal"
-              className="modal modal-bottom sm:modal-middle"
-            >
-              <div className="modal-box relative">
-                <div className="banner border-b-4 border-solid border-black flex p-2">
-                  <h2 className="font-bold text-6xl p-4 me-auto">Red Rater</h2>
-                  <Image
-                    src="/DoubleT_BlkWht.png"
-                    alt="Black and white Texas Tech Double T"
-                    width={100}
-                    height={100}
-                    style={{ width: "20%", height: "20%" }}
-                  />
-                </div>
-                <div className="modal-action flex flex-col w-full">
-                  <div>
-                    <label className="input input-bordered flex items-center gap-2 mb-4">
-                      <input
-                        type="text"
-                        className="grow"
-                        placeholder="Texas Tech Email"
-                      />
-                    </label>
-                    <label className="input input-bordered flex items-center gap-2 mb-4">
-                      <input
-                        type="text"
-                        className="grow"
-                        placeholder="Password"
-                      />
-                    </label>
-                    <button className="btn bg-red-600 w-full hover:text-white hover:bg-black">
-                    Signup
-                  </button>
-                  </div>
-                  <p className="self-center">
-                    Don't have an account?{" "}
-                    <a href="" className="text-red-600 underline">
-                      Login here
-                    </a>
-                  </p>
-                </div>
-              </div>
-              <form method="dialog" className="modal-backdrop">
-                <button>close</button>
-              </form>
-            </dialog>
-            {/* Login Modal */}
-            <dialog
-              id="login_modal"
-              className="modal modal-bottom sm:modal-middle"
-            >
-              <div className="modal-box relative">
-                <div className="banner border-b-4 border-solid border-black flex p-2">
-                  <h2 className="font-bold text-6xl p-4 me-auto">Red Rater</h2>
-                  <Image
-                    src="/DoubleT_BlkWht.png"
-                    alt="Black and white Texas Tech Double T"
-                    width={100}
-                    height={100}
-                    style={{ width: "20%", height: "20%" }}
-                  />
-                </div>
-                <div className="modal-action flex flex-col w-full">
-                  <div>
-                    <label className="input input-bordered flex items-center gap-2 mb-4">
-                      <input
-                        type="text"
-                        className="grow"
-                        placeholder="Texas Tech Email"
-                      />
-                    </label>
-                    <label className="input input-bordered flex items-center gap-2 mb-4">
-                      <input
-                        type="text"
-                        className="grow"
-                        placeholder="Password"
-                      />
-                    </label>
-                    <button className="btn bg-red-600 w-full hover:text-white hover:bg-black">
-                    Login
-                    </button>
-                  </div>
-                  <p className="self-center">
-                    Don't have an account?{" "}
-                    <a href="" className="text-red-600 underline">
-                      Signup here
-                    </a>
-                  </p>
-                </div>
-              </div>
-              <form method="dialog" className="modal-backdrop">
-                <button>close</button>
-              </form>
-            </dialog>
           </div>
         </div>
         {/* Content goes here */}
@@ -175,18 +212,28 @@ const Navbar = () => {
             />
           </div>
           <div className="absolute z-50 top-28 left-16 pl-1 md:hidden">
-            <a
+            <button
               className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-white text-2xl font-bold p2 active:text-black"
-              href=""
+              onClick={() => {
+                const modal = document.getElementById("login_modal");
+                if (modal) {
+                  (modal as HTMLDialogElement).showModal();
+                }
+              }}
             >
               Login
-            </a>
-            <a
-              href=""
+            </button>
+            <button
               className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-white text-2xl font-bold p-2 active:text-black"
-            >
+              onClick={() => {
+                const modal = document.getElementById("signup_modal");
+                if (modal) {
+                  (modal as HTMLDialogElement).showModal();
+                }
+              }}
+           >
               Sign Up
-            </a>
+            </button>
           </div>
           <li className="pl-10 p-2 sm:pb-5 2xl:p-10">
             <Link
