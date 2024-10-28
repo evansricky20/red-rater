@@ -86,7 +86,7 @@ const Navbar = () => {
                     </label>
                     <label className="input input-bordered flex items-center gap-2 mb-4">
                       <input
-                        type="text"
+                        type="password"
                         className="grow"
                         placeholder="Password"
                       />
@@ -146,7 +146,7 @@ const Navbar = () => {
                     </label>
                     <label className="input input-bordered flex items-center gap-2 mb-4">
                       <input
-                        type="text"
+                        type="password"
                         className="grow"
                         placeholder="Password"
                       />
