@@ -42,7 +42,11 @@ const TestimonialCard = () => {
                   className="radial-progress bg-black text-red-600 border-4 border-white" 
                   style={{ "--value": "70", "--size": "12rem", "--thickness": "1rem" } as React.CSSProperties} 
                   role="progressbar">
+<<<<<<< Updated upstream
                     <span className="text-white">70%</span>
+=======
+                    <span className="text-white text-xl">70%</span>
+>>>>>>> Stashed changes
                 </div>
               </div>
 
@@ -52,7 +56,11 @@ const TestimonialCard = () => {
                   className="radial-progress bg-black text-red-600 border-4 border-white" 
                   style={{ "--value": "70", "--size": "12rem", "--thickness": "1rem" } as React.CSSProperties} 
                   role="progressbar">
+<<<<<<< Updated upstream
                     <span className="text-white">70%</span>
+=======
+                    <span className="text-white text-xl">70%</span>
+>>>>>>> Stashed changes
                 </div>
               </div>
 
