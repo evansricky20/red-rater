@@ -237,7 +237,7 @@ const Navbar = () => {
           </div>
           <li className="pl-10 p-2 sm:pb-5 2xl:p-10">
             <Link
-              href="/page.tsx"
+              href="/"
               className="btn btn-ghost h-auto cursor-pointer text-4xl xs:text-5xl lg:text-6xl 2xl:text-8xl font-bold text-white hover:bg-transparent hover:text-black"
             >
               Search
