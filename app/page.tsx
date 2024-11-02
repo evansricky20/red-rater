@@ -12,7 +12,7 @@ const montserrat = Montserrat({
 // Home Page
 export default function Home() {
   return (
-    <main className="h-screen pt-20">
+    <main className="h-screen">
       <div className="bg-hero bg-cover bg-center min-h-screen w p-2 flex flex-col content-center items-center">
         {/* <h1>Hello World</h1> */}
         {/* <Navbar /> */}

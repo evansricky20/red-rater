@@ -19,6 +19,7 @@ const AITool = () => {
         onChange={updateDrawer}
       />
       <div className="drawer-content">
+        {/* <span className="animate-ping fixed h-5 w-5 rounded-full bg-white bottom-3 right-5"></span> */}
         <label
           htmlFor="ai-drawer"
           className={`btn btn-circle fixed h-20 w-20 bg-red-600 border-black z-40 lg:h-24 lg:w-24 2xl:h-32 2xl:w-32 hover:bg-red-600 hover:border-black transition-all

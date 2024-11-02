@@ -2,14 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useRef } from "react";
 
 const Signup = () => {
   return (
-    <dialog
-      id="signup_modal"
-      className="modal modal-bottom sm:modal-middle"
-    >
+    <dialog id="signup_modal" className="modal modal-bottom sm:modal-middle">
       <div className="modal-box relative">
         <div className="banner border-b-4 border-solid border-black flex p-2">
           <h2 className="font-bold text-6xl p-4 me-auto">Red Rater</h2>
@@ -31,11 +28,7 @@ const Signup = () => {
               />
             </label>
             <label className="input input-bordered flex items-center gap-2 mb-4">
-              <input
-                type="password"
-                className="grow"
-                placeholder="Password"
-              />
+              <input type="password" className="grow" placeholder="Password" />
             </label>
             <button className="btn bg-red-600 w-full hover:text-white hover:bg-black">
               Signup
@@ -43,19 +36,27 @@ const Signup = () => {
           </div>
           <p className="self-center">
             Don't have an account?{" "}
-            <button className="text-red-600 underline" onClick={() => {
-              const currModal = document.getElementById("signup_modal") as HTMLDialogElement;
-              const nextModal = document.getElementById("login_modal") as HTMLDialogElement;
+            <button
+              className="text-red-600 underline"
+              onClick={() => {
+                const currModal = document.getElementById(
+                  "signup_modal"
+                ) as HTMLDialogElement;
+                const nextModal = document.getElementById(
+                  "login_modal"
+                ) as HTMLDialogElement;
 
-              if (currModal && nextModal) { // Verify objects are not null
-                if (currModal.open) {
-                  currModal.close();
+                if (currModal && nextModal) {
+                  // Verify objects are not null
+                  if (currModal.open) {
+                    currModal.close();
+                  }
+                  if (!nextModal.open) {
+                    nextModal.showModal();
+                  }
                 }
-                if (!nextModal.open) {
-                  nextModal.showModal();
-                }
-              }
-            }}>
+              }}
+            >
               Login here
             </button>
           </p>
@@ -65,15 +66,12 @@ const Signup = () => {
         <button>close</button>
       </form>
     </dialog>
-  )
-}
+  );
+};
 
 const Login = () => {
   return (
-    <dialog
-      id="login_modal"
-      className="modal modal-bottom sm:modal-middle"
-    >
+    <dialog id="login_modal" className="modal modal-bottom sm:modal-middle">
       <div className="modal-box relative">
         <div className="banner border-b-4 border-solid border-black flex p-2">
           <h2 className="font-bold text-6xl p-4 me-auto">Red Rater</h2>
@@ -95,11 +93,7 @@ const Login = () => {
               />
             </label>
             <label className="input input-bordered flex items-center gap-2 mb-4">
-              <input
-                type="password"
-                className="grow"
-                placeholder="Password"
-              />
+              <input type="password" className="grow" placeholder="Password" />
             </label>
             <button className="btn bg-red-600 w-full hover:text-white hover:bg-black">
               Login
@@ -107,19 +101,27 @@ const Login = () => {
           </div>
           <p className="self-center">
             Don't have an account?{" "}
-            <button className="text-red-600 underline" onClick={() => {
-              const currModal = document.getElementById("login_modal") as HTMLDialogElement;
-              const nextModal = document.getElementById("signup_modal") as HTMLDialogElement;
+            <button
+              className="text-red-600 underline"
+              onClick={() => {
+                const currModal = document.getElementById(
+                  "login_modal"
+                ) as HTMLDialogElement;
+                const nextModal = document.getElementById(
+                  "signup_modal"
+                ) as HTMLDialogElement;
 
-              if (currModal && nextModal) { // Verify objects are not null
-                if (currModal.open) {
-                  currModal.close();
+                if (currModal && nextModal) {
+                  // Verify objects are not null
+                  if (currModal.open) {
+                    currModal.close();
+                  }
+                  if (!nextModal.open) {
+                    nextModal.showModal();
+                  }
                 }
-                if (!nextModal.open) {
-                  nextModal.showModal();
-                }
-              }
-            }}>
+              }}
+            >
               Signup here
             </button>
           </p>
@@ -129,8 +131,8 @@ const Login = () => {
         <button>close</button>
       </form>
     </dialog>
-  )
-}
+  );
+};
 
 const Navbar = () => {
   return (
@@ -231,7 +233,7 @@ const Navbar = () => {
                   (modal as HTMLDialogElement).showModal();
                 }
               }}
-           >
+            >
               Sign Up
             </button>
           </div>
