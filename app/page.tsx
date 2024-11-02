@@ -12,11 +12,8 @@ const montserrat = Montserrat({
 // Home Page
 export default function Home() {
   return (
-    <main className="h-screen">
-      <div className="bg-hero bg-cover bg-center min-h-screen w p-2 flex flex-col content-center items-center">
-        {/* <h1>Hello World</h1> */}
-        {/* <Navbar /> */}
-
+    <main className="h-screen pt-20">
+      <div className="bg-hero bg-cover bg-center h-full w p-2 flex flex-col content-center items-center">
         {/* container for texas tech banner */}
         <div className="w-full mt-24 pb-5 sm:w-4/5 lg:w-3/5">
           <Image
