@@ -4,11 +4,7 @@ import LineGraph from './LineGraph';
 
 const InfoCard = () => {
     return (
-<<<<<<< Updated upstream
-        <div className="pt-10">
-=======
         <div className="pt-10 pb-5">
->>>>>>> Stashed changes
           <h1 className="text-6xl font-bold">Professor Name</h1>
           <div className="flex">
             <div className="flex flex-col w-1/2">
@@ -47,11 +43,7 @@ const InfoCard = () => {
                   className="radial-progress bg-white text-red-600 border-4 border-black" 
                   style={{ "--value": "70", "--size": "12rem", "--thickness": "1rem" } as React.CSSProperties} 
                   role="progressbar">
-<<<<<<< Updated upstream
-                    <span className="text-black">70%</span>
-=======
                     <span className="text-black text-xl">70%</span>
->>>>>>> Stashed changes
                 </div>
               </div>
               <Image 
