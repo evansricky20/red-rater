@@ -20,9 +20,9 @@ const example_data = [
 
   const LineGraph = () => {
     return (
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height={350}>
         <LineChart margin={{top:10, right:50, bottom:10, left:0}} data={example_data}>
-            <Line type="monotone" dataKey="rating" stroke="#8884d8" />
+            <Line type="monotone" dataKey="rating" stroke="#dc2626" />
             <CartesianGrid stroke="#ccc" vertical={false}/>
             <XAxis dataKey="semester" />
             <YAxis />

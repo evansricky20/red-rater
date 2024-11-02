@@ -1,76 +1,61 @@
 import React from "react";
 import Image from "next/image";
-import LineGraph from "../components/LineGraph"
-import Searchbar from "../components/SearchBar";
+import InfoCard from "../components/InfoCard";
+import TestimonialCard from "../components/TestimonialCard";
 
 const dashboard = () => {
   return (
-    <main className="h-screen pt-20">
-      <section className="info-section h-fit flex justify-center border-4 border-blue-300">
-        <div className="pt-10 border-4 border-red-400">
-          <h1 className="text-6xl font-bold">Professor Name</h1>
-          <div className="flex border-4 border-green-400">
-            <div className="flex flex-col w-1/2 border-4 border-blue-600">
-              <div className="flex justify-between">
-                <h2 className="text-2xl font-bold text-red-700 my-auto">Professor College</h2>
-                <select className="select select-bordered max-w-xs font-bold">
-                  <option disabled selected>Course List</option>
-                  <option>Example 1</option>
-                  <option>Example 2</option>
-                </select>
-              </div>
-              <div className="grid grid-cols-2 gap-4 my-4">
-                {/* Example descriptors, should be passed as an array function instead. */}
-                <div className="descriptor bg-slate-300">
-                  <span>Professor Descriptor...</span>
-                </div>
-                <div className="descriptor bg-slate-300">
-                  <span>Professor Descriptor...</span>
-                </div>
-                <div className="descriptor bg-slate-300">
-                  <span>Professor Descriptor...</span>
-                </div>
-                <div className="descriptor bg-slate-300">
-                  <span>Professor Descriptor...</span>
-                </div>
-              </div>
-              <div className="w-full h-full">
-                <LineGraph />
-              </div>
-              
-            </div>
-            <div className="data-board flex flex-col w-1/2 border-4 border-red-300">
-              <h3 className="text-center text-2xl font-bold my-auto">Overall Rating</h3>
-              <div className="self-center">
-                <div 
-                  className="radial-progress" 
-                  style={{ "--value": "70", "--size": "12rem", "--thickness": "2rem" } as React.CSSProperties} 
-                  role="progressbar">
-                    70%
-                </div>
-              </div>
+    <main className="bg-hero bg-cover bg-center h-screen pt-20">
+      <section className="info-section bg-white h-fit w-10/12 flex justify-center mx-auto mt-10">
+        <InfoCard />
+      </section>
+      <section className="testimonial-section h-fit flex flex-col justify-center mx-auto">
+        <div className="flex-1 border-b-4 border-black bg-red-600 font-bold">
+          <div className="lineart-element flex">
+            <div style={{ transform: 'scaleX(-1)' }}>
               <Image 
-                  src="/bubble_example.png"
-                  alt="example bubbles"
-                  width={1000}
-                  height={100}
-                  style={{ width: "100%", height: "100%" }}
+                src="/TTU_Horizontal_Lineart_black.png"
+                alt="TTU line art decal."
+                width={1000}
+                height={100}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
+            <Image 
+              src="/TTU_Horizontal_Lineart_white.png"
+              alt="TTU line art decal."
+              width={1000}
+              height={100}
+              style={{ width: "50%", height: "100%" }}
+            />
+          </div>
+          <h2 className="text-center text-3xl text-white p-4">Student Testimonials</h2>
+        </div>
+
+        <div>
+          <div className="w-2/3 mx-auto">
+            <div className="testimonial-buttons w-7/12 ml-auto flex justify-between py-5 px-6">
+              <button className="btn btn-outline place-self-center border-2">
+                New Post
+                <Image 
+                  src="/plus.svg"
+                  alt="Plus symbol"
+                  width={20}
+                  height={20}
                 />
+              </button>
+              <button className="btn btn-outline border-2">
+                Filter
+                <Image 
+                  src="/filter.svg"
+                  alt="Filter symbol"
+                  width={20}
+                  height={20}
+                />
+                </button>
             </div>
           </div>
-        </div>
-      </section>
-      <section className="testimonial-section h-fit flex justify-center border-4 border-red-500">
-        <div role="tablist" className="tabs tabs-bordered tabs-lg flex-1 bg-red-600 font-bold">
-            <input type="radio" name="testimonial_tabs" role="tab" className="tab" aria-label="Student Testimonials" defaultChecked/>
-            <div role="tabpanel" className="tab-content p-10">
-              Student Testimonials Content
-            </div>
-
-            <input type="radio" name="testimonial_tabs" role="tab" className="tab" aria-label="Student Evaluations" />
-            <div role="tabpanel" className="tab-content p-10">
-              Student Evaluations Content
-            </div>
+          <TestimonialCard />
         </div>
       </section>
     </main>
