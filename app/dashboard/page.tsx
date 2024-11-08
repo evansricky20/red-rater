@@ -5,10 +5,12 @@ import TestimonialCard from "../components/TestimonialCard";
 
 const dashboard = () => {
   return (
-    <main className="bg-hero bg-cover bg-center h-screen pt-20">
-      <section className="info-section bg-white h-fit w-10/12 flex justify-center mx-auto mt-10">
-        <InfoCard />
-      </section>
+    <main className="h-screen">
+      <div className="bg-hero bg-cover bg-center pt-20">
+        <section className="info-section bg-white h-fit w-10/12 flex justify-center mx-auto mt-10">
+          <InfoCard />
+        </section>
+      </div>
       <section className="testimonial-section h-fit flex flex-col justify-center mx-auto">
         <div className="flex-1 border-b-4 border-black bg-red-600 font-bold">
           <div className="lineart-element flex">

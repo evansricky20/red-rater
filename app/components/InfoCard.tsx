@@ -10,8 +10,8 @@ const InfoCard = () => {
             <div className="flex flex-col w-1/2">
               <div className="flex justify-between">
                 <h2 className="text-2xl font-bold text-red-700 my-auto">Professor College</h2>
-                <select className="select select-bordered max-w-xs font-bold">
-                  <option disabled selected>Course List</option>
+                <select className="select select-bordered max-w-xs font-bold" defaultValue="Course List">
+                  <option disabled>Course List</option>
                   <option>Example 1</option>
                   <option>Example 2</option>
                 </select>
