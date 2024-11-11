@@ -3,9 +3,9 @@ import { createUser } from '../../../lib/authentication'; // Adjust path if need
 
 // Named export for POST method
 export async function POST(req: Request) {
-    const { email, password } = await req.json();
+    const { fname, lname, email, password } = await req.json();
     try {
-        await createUser(email, password);
+        await createUser(fname, lname, email, password);
         return NextResponse.json({ message: 'User created successfully' });
     } catch (error) {
         console.error('Error creating user:', error);

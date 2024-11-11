@@ -2,12 +2,54 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Signup from "./Signup";
+import Login from "./Login";
 
-import Signup from "./Signup"
-import Login from "./Login"
+const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string } | null }) => {
+  // State variables
+  const [user, setUser] = useState<{ fname: string; lname: string } | null>(initialUser);
+  const [loading, setLoading] = useState(true);
 
-const Navbar = () => {
+  useEffect(() => {
+    if (!initialUser) {
+      // Fetch user details from API if not provided by SSR
+      const fetchUser = async () => {
+        try {
+          const response = await fetch('/api/auth/user');
+          if (response.ok) {
+            const data = await response.json();
+            setUser(data);
+          }
+        } catch (error) {
+          console.error("Failed to fetch user:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchUser();
+    } else {
+      setLoading(false);
+    }
+  }, [initialUser]);
+
+  // Function for handling logout
+  const logout = async () => {
+    try {
+      // Fetch logout route
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+      });
+      if (response.ok) {
+        setUser(null);
+        window.location.href = '/';
+      }
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     // drawer: root container
     <div className="drawer fixed z-50">
@@ -45,28 +87,52 @@ const Navbar = () => {
             />
           </div>
           <div className="absolute h-fit w-fit right-1 md:right-1 lg:right-16 2xl:right-52">
-            <button
-              className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-red-600 text-2xl font-bold p-10 hidden md:flex"
-              onClick={() => {
-                const modal = document.getElementById("login_modal");
-                if (modal) {
-                  (modal as HTMLDialogElement).showModal();
-                }
-              }}
-            >
-              Login
-            </button>
-            <button
-              className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-red-600 text-2xl font-bold p-10 hidden md:flex"
-              onClick={() => {
-                const modal = document.getElementById("signup_modal");
-                if (modal) {
-                  (modal as HTMLDialogElement).showModal();
-                }
-              }}
-            >
-              Sign Up
-            </button>
+            {loading ? (
+              // Render loading while waiting for data fetch
+              <div className="text-white text-bold">
+                <span className="loading loading-spinner loading-xs mx-2"></span>
+                Loading...
+              </div>
+            ) : user ? (
+              // If not loading, and user is not null, render user component
+              <div className="dropdown dropdown-bottom dropdown-end">
+                <div tabIndex={0} role="button" className="btn bg-transparent hover:bg-gray-700 border-0 w-fit px-2 flex items-center space-x-2">
+                  <Image src="/user-avatar-light.svg" alt="User profile picture" width={50} height={50} style={{ filter: "invert(100%)" }} />
+                  <span className="text-white text-xl">{user.lname}, {user.fname}</span>
+                </div>
+                <ul tabIndex={0} className="text-white dropdown-content menu bg-gray-900 rounded-box z-[1] w-52 p-2 shadow">
+                  <li><a>Edit Profile</a></li>
+                  <li><a onClick={logout}>Logout</a></li>
+                </ul>
+              </div>
+            ) : (
+              // Else, not loading, and user is null, render login and signup buttons
+              // Login & Signup Buttons
+              <>
+                <button
+                  className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-red-600 text-2xl font-bold p-10 hidden md:flex"
+                  onClick={() => {
+                    const modal = document.getElementById("login_modal");
+                    if (modal) {
+                      (modal as HTMLDialogElement).showModal();
+                    }
+                  }}
+                >
+                  Login
+                </button>
+                <button
+                  className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-red-600 text-2xl font-bold p-10 hidden md:flex"
+                  onClick={() => {
+                    const modal = document.getElementById("signup_modal");
+                    if (modal) {
+                      (modal as HTMLDialogElement).showModal();
+                    }
+                  }}
+                >
+                  Sign Up
+                </button>
+              </>
+            )}
           </div>
         </div>
         {/* Content goes here */}

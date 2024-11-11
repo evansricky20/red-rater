@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     }
 
     // Generate a JWT token after successful login
-    const token = await signJWT({ userId: user.id, email: user.email });
+    const token = await signJWT({ userId: user.id, email: user.email, fname: user.fname, lname: user.lname });
 
     // Return the token as an HTTP-only cookie
     const response = NextResponse.json({ message: 'Login successful' });

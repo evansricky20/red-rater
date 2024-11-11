@@ -4,6 +4,7 @@ import Image from "next/image";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent form submission
@@ -37,13 +38,12 @@ const Login = () => {
       if (loginModal) {
         loginModal.close();
       }
-
-      // Redirect to another page or show a success message
-      // For example, redirect to a dashboard:
-      window.location.href = "/dashboard";
+      
+      // Reload the page
+      window.location.href = "/";
     } catch (error) {
       // Handle errors (display error message)
-      alert("Invalid email or password.");
+      setError("Invalid email or password.");
     }
   };
 
@@ -83,6 +83,7 @@ const Login = () => {
                   required
                 />
               </label>
+              {error && <p className="text-red-600">{error}</p>}
               <button
                 type="submit"
                 className="btn bg-red-600 w-full hover:text-white hover:bg-black"
