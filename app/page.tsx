@@ -5,8 +5,8 @@ import SearchBar from "./components/SearchBar";
 import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({
-  subsets: ["latin"], // Adjust this based on your language requirements
-  weight: ["400", "700"], // You can specify multiple weights if needed
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 // Home Page
