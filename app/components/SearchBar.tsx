@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import { useEffect, useState } from "react";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Professor {
   Name: string;
@@ -9,21 +10,15 @@ interface Professor {
 
 const SearchBar = () => {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
   const [professors, setProfessors] = useState<Professor[]>([]);
   const [findName, setName] = useState<Professor[]>([]);
-  const query = searchParams.get("query") || "";
+  const router = useRouter();
+  const [profName, searchProfName] = useState("");
 
   const handleSearch = (searchTerm: string) => {
-    const params = new URLSearchParams(searchParams);
-
     if (searchTerm) {
-      params.set("query", searchTerm);
-    } else {
-      params.delete("query");
+      router.push(`/dashboard/${searchTerm}`);
     }
-    replace(`${pathname}?${params.toString()}`);
   };
 
   useEffect(() => {
@@ -39,16 +34,15 @@ const SearchBar = () => {
   }, []);
 
   useEffect(() => {
-    if (query) {
+    if (profName) {
       const filtered = professors.filter((professor) =>
-        professor.Name.toLowerCase().includes(query.toLowerCase())
+        professor.Name.toLowerCase().includes(profName.toLowerCase())
       );
       setName(filtered);
     } else {
       setName(professors);
     }
-  }, [query, professors]);
-
+  }, [profName, professors]);
   return (
     <div className="max-w-2xl">
       <form>
@@ -59,9 +53,11 @@ const SearchBar = () => {
           <input
             placeholder="Search by Professor Name"
             className="grow text-gray-200 placeholder:text-gray-200 placeholder:font-normal text-sm sm:text-base min-w-fit"
-            defaultValue={searchParams.get("query")?.toString()}
             onChange={(e) => {
-              handleSearch(e.target.value);
+              searchProfName(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSearch(profName); // Handle Enter key
             }}
           />
           <img
@@ -71,7 +67,7 @@ const SearchBar = () => {
           />
         </label>
       </form>
-      {query && findName.length > 0 && (
+      {profName && (
         <ul className="mt-2 bg-black bg-opacity-40 border border-black rounded-lg shadow-lg max-h-60 overflow-y-auto z-10 max-w-2xl">
           {findName.map((professor, index) => (
             <li
