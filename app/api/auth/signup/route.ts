@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createUser } from '../../../lib/authentication'; // Adjust path if needed
+import { createUser } from '../../../lib/authentication';
 
 // Named export for POST method
 export async function POST(req: Request) {

@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'; // Middleware api for managing HTTP responses.
 import { verify } from 'argon2'; // Password comparison function
 import { signJWT } from '../../../lib/jwt'; // Import the signJWT function
-import { getConnection } from '../../../lib/db_util'; // Your database utility
+import { getConnection } from '../../../lib/db_util'; // Database utility
 
 export async function POST(request: Request) {
   const { email, password } = await request.json();
