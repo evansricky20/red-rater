@@ -62,7 +62,7 @@ const SearchBar = () => {
           />
           <img
             src="/MagnifyingGlass.svg"
-            alt="magnify glass"
+            alt="Magnifying glass"
             className="h-1/2 opacity-70"
           />
         </label>

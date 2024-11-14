@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+
 import Signup from "./Signup";
 import Login from "./Login";
 
@@ -12,8 +13,8 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Fetch user details from API if not provided by SSR
     if (!initialUser) {
-      // Fetch user details from API if not provided by SSR
       const fetchUser = async () => {
         try {
           const response = await fetch('/api/auth/user');
@@ -43,7 +44,6 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
       });
       if (response.ok) {
         setUser(null);
-        window.location.href = '/';
       }
     } catch (error) {
       console.error('Logout failed:', error);
