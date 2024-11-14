@@ -15,9 +15,14 @@ const SearchBar = () => {
   const router = useRouter();
   const [profName, searchProfName] = useState("");
 
+  const cleanSearchTerm = (term: string) => {
+    return term.replace(/[^a-zA-Z0-9 ]/g, "");
+  };
+
   const handleSearch = (searchTerm: string) => {
-    if (searchTerm) {
-      router.push(`/dashboard/${searchTerm}`);
+    const cleanedTerm = cleanSearchTerm(searchTerm);
+    if (cleanedTerm) {
+      router.push(`/dashboard/${cleanedTerm}`);
     }
   };
 
