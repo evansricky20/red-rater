@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import LineGraph from './LineGraph';
@@ -27,6 +29,12 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
         }
         const data = await response.json();
 
+        if (data.length === 0) {
+          console.error('No data found for the search term:', searchTerm);
+          notFound(); // Trigger the default Next.js 404 page if no data is found
+          return;
+        }
+
         // Transform the data to match the Profile interface
         const transformedProfile: Profile = {
           name: data[0].Name,
@@ -38,6 +46,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
         setProfile(transformedProfile);
       } catch (error) {
         console.error('Failed to fetch profile:', error);
+        notFound(); // Trigger the default Next.js 404 page on error
       } finally {
         setLoading(false);
       }
@@ -51,7 +60,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
   }
 
   if (!profile) {
-    notFound(); // Trigger the default Next.js 404 page
+    return null; // Return null if profile is not set to avoid rendering errors
   }
 
   return (

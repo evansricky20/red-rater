@@ -1,58 +1,9 @@
-"use client";
-
-import { useEffect, useState } from 'react';
-import { notFound } from 'next/navigation';
 import InfoCard from './../../components/InfoCard';
 import Image from 'next/image';
 import TestimonialCard from './../../components/TestimonialCard';
 
-interface Profile {
-  name: string;
-  courses: string[];
-  descriptors: string[];
-  overallRating: number;
-}
-
 const Dashboard = ({ params }: { params: { searchTerm: string } }) => {
   const { searchTerm } = params;
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch(`/api/professors/${encodeURIComponent(searchTerm)}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-
-        // Transform the data to match the Profile interface
-        const transformedProfile: Profile = {
-          name: data[0].Name,
-          courses: data.map((item: any) => `${item['Course Num']} - ${item.Term}`),
-          descriptors: data.map((item: any) => item.Response),
-          overallRating: data.reduce((acc: number, item: any) => acc + item.Average, 0) / data.length,
-        };
-
-        setProfile(transformedProfile);
-      } catch (error) {
-        console.error('Failed to fetch profile:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, [searchTerm]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!profile) {
-    notFound();
-  }
 
   return (
     <main className="h-screen">
