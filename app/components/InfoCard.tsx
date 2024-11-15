@@ -21,14 +21,14 @@ interface Profile {
 }
 
 const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
-  // State Functions
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [filteredTerms, setFilteredTerms] = useState<string[]>([]);
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
   const [data, setData] = useState<any[]>([]); // Store raw data
-  const [overallRating, setOverallRating] = useState<number>(0); // Initialize overallRating equal to 0
+  const [overallRating, setOverallRating] = useState<number>(0); // Initialize overallRating to 0
+  const [lineGraphData, setLineGraphData] = useState<{ term: string; rating: number }[]>([]); // Data for LineGraph
 
   const fetchProfile = async () => {
     try {
@@ -67,18 +67,34 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
   }, [searchTerm]);
 
   useEffect(() => {
-    if (selectedCourse) { // If a course is selected, filter respective terms
+    if (selectedCourse) {
       const terms = Array.from(new Set(data
         .filter((item: any) => item.CourseNum === parseInt(selectedCourse))
         .map((item: any) => item.Term)));
       setFilteredTerms(terms);
+
+      // Extract overallRating and Term for the selected course
+      const graphData = data
+        .filter((item: any) => item.CourseNum === parseInt(selectedCourse))
+        .map((item: any) => ({
+          term: item.Term,
+          rating: Math.round((parseFloat(item.OverallRating) / 5) * 100),
+        }));
+      setLineGraphData(graphData);
+
+      // Set the selected term to the first term in the filtered terms
+      if (terms.length > 0) {
+        setSelectedTerm(terms[0]);
+      }
     } else {
       setFilteredTerms([]);
+      setLineGraphData([]);
+      setSelectedTerm(null);
     }
   }, [selectedCourse, data]);
 
   useEffect(() => {
-    if (selectedCourse && selectedTerm) { // If a course and term have been selected, interpolate the radial-progress component to the new value
+    if (selectedCourse && selectedTerm) {
       const selectedData = data.find(
         (item: any) =>
           item.CourseNum === parseInt(selectedCourse) && item.Term === selectedTerm
@@ -90,7 +106,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
     }
   }, [selectedCourse, selectedTerm, data]);
 
-  const animateOverallRating = (newRating: number) => { // Interpolation function
+  const animateOverallRating = (newRating: number) => {
     const duration = 1000; // Duration of the animation in milliseconds
     const start = overallRating;
     const startTime = performance.now();
@@ -109,9 +125,18 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
     requestAnimationFrame(animate);
   };
 
-  const handleCourseChange = (e: React.ChangeEvent<HTMLSelectElement>) => { // If selected course has changed, set term to default value
+  const handleCourseChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCourse(e.target.value);
     setSelectedTerm(null); // Reset the selected term when the course changes
+    animateOverallRating(0); // Interpolate the overall rating to 0 when the course changes
+  };
+
+  const handleTermChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const term = e.target.value;
+    setSelectedTerm(term);
+    if (!term) {
+      animateOverallRating(0); // Interpolate the overall rating to 0 when the term is set to the default value
+    }
   };
 
   if (loading) {
@@ -124,7 +149,8 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
 
   return (
     <div className="pt-10 pb-5 w-3/4">
-      <h1 className="text-6xl font-bold max-w-5xl pb-4">{profile.name}</h1>
+      <h1 className="text-6xl font-bold max-w-5xl">{profile.name}</h1>
+      <h2 className="text-2xl text-red-600 font-bold max-w-3xl px-1 pb-2">{profile.subjectName}</h2>
       <div className="flex">
         <div className="flex flex-col w-1/2">
           <div className="flex justify-between">
@@ -141,7 +167,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
             <select
               className="select select-bordered max-w-xs font-bold"
               value={selectedTerm || ""}
-              onChange={(e) => setSelectedTerm(e.target.value)}
+              onChange={handleTermChange}
               disabled={!selectedCourse} // Disable the term dropdown if no course is selected
             >
               <option value="" disabled>Term</option>
@@ -171,7 +197,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
             </p>
           </div>
           <div className="w-full h-full">
-            <LineGraph />
+            <LineGraph data={lineGraphData} />
           </div>
         </div>
         <div className="data-board flex flex-col w-1/2">

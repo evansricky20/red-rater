@@ -10,26 +10,30 @@ import {
   Tooltip 
 } from 'recharts';
 
-const example_data = [
-    {semester: "Spring '22", rating: 90},
-    {semester: "Fall '22", rating: 85},
-    {semester: "Spring '23", rating: 75},
-    {semester: "Fall '23", rating: 87},
-    {semester: "Spring '24", rating: 80}
-  ]
+interface LineGraphProps {
+  data: { term: string; rating: number }[];
+}
 
-  const LineGraph = () => {
-    return (
-      <ResponsiveContainer width="100%" height={350}>
-        <LineChart margin={{top:10, right:50, bottom:10, left:0}} data={example_data}>
-            <Line type="monotone" dataKey="rating" stroke="#dc2626" />
-            <CartesianGrid stroke="#ccc" vertical={false}/>
-            <XAxis dataKey="semester" />
-            <YAxis />
-            <Tooltip />
-        </LineChart>
-      </ResponsiveContainer>
-    )
-  }
+const LineGraph: React.FC<LineGraphProps> = ({ data }) => {
+  // Custom tick formatter to ensure the first and last term are always shown
+  const formatTick = (term: string, index: number) => {
+    if (index === 0 || index === data.length - 1) {
+      return term;
+    }
+    return '';
+  };
 
-  export default LineGraph;
+  return (
+    <ResponsiveContainer width="100%" height={350}>
+      <LineChart margin={{ top: 10, right: 50, bottom: 10, left: 0 }} data={data}>
+        <Line type="monotone" dataKey="rating" stroke="#dc2626" />
+        <CartesianGrid stroke="#ccc" vertical={false} />
+        <XAxis dataKey="term" tickFormatter={formatTick} interval="preserveStartEnd" />
+        <YAxis />
+        <Tooltip />
+      </LineChart>
+    </ResponsiveContainer>
+  );
+};
+
+export default LineGraph;
