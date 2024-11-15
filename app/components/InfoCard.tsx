@@ -1,7 +1,8 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import LineGraph from "./LineGraph";
-import { notFound } from "next/navigation";
 
 interface InfoCardProps {
   searchTerm: string;
@@ -61,7 +62,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
   }
 
   if (!profile) {
-    notFound(); // Trigger the default Next.js 404 page
+    return null; // Return null if profile is not set to avoid rendering errors
   }
 
   return (

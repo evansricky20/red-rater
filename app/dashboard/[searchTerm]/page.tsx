@@ -1,56 +1,26 @@
-"use client";
-
-import { useEffect, useState } from 'react';
 import { notFound } from 'next/navigation';
 import InfoCard from './../../components/InfoCard';
 import Image from 'next/image';
 import TestimonialCard from './../../components/TestimonialCard';
 
-interface Profile {
-  name: string;
-  courses: string[];
-  descriptors: string[];
-  overallRating: number;
+interface DashboardProps {
+  params: { searchTerm: string };
+  searchParams: { baseURL: string };
 }
 
-const Dashboard = ({ params }: { params: { searchTerm: string } }) => {
+const Dashboard = async ({ params, searchParams }: DashboardProps) => {
   const { searchTerm } = params;
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch(`/api/professors/${encodeURIComponent(searchTerm)}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-
-        // Transform the data to match the Profile interface
-        const transformedProfile: Profile = {
-          name: data[0].Name,
-          courses: data.map((item: any) => `${item['Course Num']} - ${item.Term}`),
-          descriptors: data.map((item: any) => item.Response),
-          overallRating: data.reduce((acc: number, item: any) => acc + item.Average, 0) / data.length,
-        };
-
-        setProfile(transformedProfile);
-      } catch (error) {
-        console.error('Failed to fetch profile:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, [searchTerm]);
-
-  if (loading) {
-    return <div>Loading...</div>;
+  const { baseURL } = searchParams;
+  
+  // Fetch HTTP response from '/api/professors'
+  const response = await fetch(`${baseURL}/api/professors/${encodeURIComponent(searchTerm)}`);
+  
+  if (!response.ok) { // Confirm successful HTTP response
+    notFound();
   }
+  const data = await response.json();
 
-  if (!profile) {
+  if (!data || data.length === 0) { // Confirm data was retrieved from DB
     notFound();
   }
 
@@ -58,7 +28,7 @@ const Dashboard = ({ params }: { params: { searchTerm: string } }) => {
     <main className="h-screen">
       <div className="bg-hero bg-cover bg-center pt-20">
         <section className="info-section bg-white h-fit w-10/12 flex justify-center mx-auto mt-10">
-          <InfoCard searchTerm={searchTerm} />
+          <InfoCard searchTerm={searchTerm}/>
         </section>
       </div>
       <section className="testimonial-section h-fit flex flex-col justify-center mx-auto">
