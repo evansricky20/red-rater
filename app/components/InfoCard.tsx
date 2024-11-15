@@ -10,52 +10,109 @@ interface InfoCardProps {
 
 interface Profile {
   name: string;
+  subjectName: string;
+  terms: string[];
   courses: string[];
-  //descriptors: string[];
+  entries: number;
+  avgResponse1: number;
+  avgResponse2: number;
+  avgResponse3: number;
   overallRating: number;
 }
 
 const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
+  // State Functions
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  const [filteredTerms, setFilteredTerms] = useState<string[]>([]);
+  const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
+  const [data, setData] = useState<any[]>([]); // Store raw data
+  const [overallRating, setOverallRating] = useState<number>(0); // Initialize overallRating equal to 0
+
+  const fetchProfile = async () => {
+    try {
+      const response = await fetch(
+        `/api/professors/${encodeURIComponent(searchTerm)}`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      setData(data); // Store raw data
+
+      // Transform the data to match the Profile interface
+      const transformedProfile: Profile = {
+        name: data[0].Name,
+        subjectName: data[0].SubjectName,
+        terms: Array.from(new Set(data.map((item: any) => item.Term))),
+        courses: Array.from(new Set(data.map((item: any) => item.CourseNum))),
+        entries: data.reduce((acc: number, item: any) => acc + parseInt(item.Entries, 10), 0),
+        avgResponse1: parseFloat(data[0].AvgResponse1),
+        avgResponse2: parseFloat(data[0].AvgResponse2),
+        avgResponse3: parseFloat(data[0].AvgResponse3),
+        overallRating: Math.round((parseFloat(data[0].OverallRating) / 5) * 100),
+      };
+
+      setProfile(transformedProfile);
+    } catch (error) {
+      console.error("Failed to fetch profile:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch(
-          `/api/professors/${encodeURIComponent(searchTerm)}`
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
+    fetchProfile();
+  }, [searchTerm]);
 
-        // Transform the data to match the Profile interface
-        const transformedProfile: Profile = {
-          name: data[0].Name,
-          courses: Array.from(
-            new Set(data.map((item: any) => item["Course Num"]))
-          ),
-          //descriptors: data.map((item: any) => item.Response),
-          overallRating: parseFloat(
-            (
-              (data.reduce((acc: number, item: any) => acc + item.Average, 0) /
-                data.length) *
-              20
-            ).toFixed(2)
-          ),
-        };
+  useEffect(() => {
+    if (selectedCourse) { // If a course is selected, filter respective terms
+      const terms = Array.from(new Set(data
+        .filter((item: any) => item.CourseNum === parseInt(selectedCourse))
+        .map((item: any) => item.Term)));
+      setFilteredTerms(terms);
+    } else {
+      setFilteredTerms([]);
+    }
+  }, [selectedCourse, data]);
 
-        setProfile(transformedProfile);
-      } catch (error) {
-        console.error("Failed to fetch profile:", error);
-      } finally {
-        setLoading(false);
+  useEffect(() => {
+    if (selectedCourse && selectedTerm) { // If a course and term have been selected, interpolate the radial-progress component to the new value
+      const selectedData = data.find(
+        (item: any) =>
+          item.CourseNum === parseInt(selectedCourse) && item.Term === selectedTerm
+      );
+      if (selectedData) {
+        const newOverallRating = Math.round((parseFloat(selectedData.OverallRating) / 5) * 100);
+        animateOverallRating(newOverallRating);
+      }
+    }
+  }, [selectedCourse, selectedTerm, data]);
+
+  const animateOverallRating = (newRating: number) => { // Interpolation function
+    const duration = 1000; // Duration of the animation in milliseconds
+    const start = overallRating;
+    const startTime = performance.now();
+
+    const animate = (currentTime: number) => {
+      const elapsedTime = currentTime - startTime;
+      const progress = Math.min(elapsedTime / duration, 1);
+      const interpolatedRating = start + (newRating - start) * progress;
+      setOverallRating(interpolatedRating);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
       }
     };
 
-    fetchProfile();
-  }, [searchTerm]);
+    requestAnimationFrame(animate);
+  };
+
+  const handleCourseChange = (e: React.ChangeEvent<HTMLSelectElement>) => { // If selected course has changed, set term to default value
+    setSelectedCourse(e.target.value);
+    setSelectedTerm(null); // Reset the selected term when the course changes
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -67,29 +124,33 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
 
   return (
     <div className="pt-10 pb-5 w-3/4">
-      <h1 className="text-6xl font-bold max-w-5xl">{profile.name}</h1>
+      <h1 className="text-6xl font-bold max-w-5xl pb-4">{profile.name}</h1>
       <div className="flex">
         <div className="flex flex-col w-1/2">
           <div className="flex justify-between">
             <select
               className="select select-bordered max-w-xs font-bold"
-              defaultValue="Course List"
+              defaultValue=""
+              onChange={handleCourseChange}
             >
-              <option disabled>Course List</option>
-              {profile.courses.map((course, index) => (
-                <option key={index}>{course}</option>
+              <option value="" disabled>Course List</option>
+              {profile.courses.map((course) => (
+                <option key={course} value={course}>{`CS ${course}`}</option>
+              ))}
+            </select>
+            <select
+              className="select select-bordered max-w-xs font-bold"
+              value={selectedTerm || ""}
+              onChange={(e) => setSelectedTerm(e.target.value)}
+              disabled={!selectedCourse} // Disable the term dropdown if no course is selected
+            >
+              <option value="" disabled>Term</option>
+              {filteredTerms.map((term) => (
+                <option key={term} value={term}>{term}</option>
               ))}
             </select>
           </div>
           <div className="grid grid-cols-2 gap-4 my-4">
-            {/* {profile.descriptors.map((descriptor, index) => (
-              <div
-                key={index}
-                className="descriptor text-center bg-slate-300 rounded-sm p-2"
-              >
-                <span>{descriptor}</span>
-              </div>
-            ))} */}
             <p className="flex items-center justify-center w-fit min-w-64 bg-gray-400 rounded-md h-10 p-1 font-bold">
               Descriptor
             </p>
@@ -122,7 +183,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
               className="radial-progress bg-white text-red-600 border-4 border-black"
               style={
                 {
-                  "--value": profile.overallRating,
+                  "--value": overallRating,
                   "--size": "16rem",
                   "--thickness": "2rem",
                 } as React.CSSProperties
@@ -130,7 +191,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
               role="progressbar"
             >
               <span className="text-black text-4xl font-semibold">
-                {profile.overallRating}%
+                {Math.round(overallRating)}%
               </span>
             </div>
           </div>
