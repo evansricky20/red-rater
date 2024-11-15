@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { notFound } from 'next/navigation';
 import InfoCard from './../../components/InfoCard';
 import Image from 'next/image';
 import TestimonialCard from './../../components/TestimonialCard';
@@ -50,19 +51,14 @@ const Dashboard = ({ params }: { params: { searchTerm: string } }) => {
   }
 
   if (!profile) {
-    return <div>Professor not found.</div>;
+    notFound();
   }
 
   return (
     <main className="h-screen">
       <div className="bg-hero bg-cover bg-center pt-20">
         <section className="info-section bg-white h-fit w-10/12 flex justify-center mx-auto mt-10">
-          <InfoCard
-            name={profile.name}
-            courses={profile.courses}
-            descriptors={profile.descriptors}
-            overallRating={profile.overallRating}
-          />
+          <InfoCard searchTerm={searchTerm} />
         </section>
       </div>
       <section className="testimonial-section h-fit flex flex-col justify-center mx-auto">
