@@ -1,15 +1,34 @@
+import { notFound } from 'next/navigation';
 import InfoCard from './../../components/InfoCard';
 import Image from 'next/image';
 import TestimonialCard from './../../components/TestimonialCard';
 
-const Dashboard = ({ params }: { params: { searchTerm: string } }) => {
+interface DashboardProps {
+  params: { searchTerm: string };
+  searchParams: { baseURL: string };
+}
+
+const Dashboard = async ({ params, searchParams }: DashboardProps) => {
   const { searchTerm } = params;
+  const { baseURL } = searchParams;
+  
+  // Fetch HTTP response from '/api/professors'
+  const response = await fetch(`${baseURL}/api/professors/${encodeURIComponent(searchTerm)}`);
+  
+  if (!response.ok) { // Confirm successful HTTP response
+    notFound();
+  }
+  const data = await response.json();
+
+  if (!data || data.length === 0) { // Confirm data was retrieved from DB
+    notFound();
+  }
 
   return (
     <main className="h-screen">
       <div className="bg-hero bg-cover bg-center pt-20">
         <section className="info-section bg-white h-fit w-10/12 flex justify-center mx-auto mt-10">
-          <InfoCard searchTerm={searchTerm} />
+          <InfoCard searchTerm={searchTerm}/>
         </section>
       </div>
       <section className="testimonial-section h-fit flex flex-col justify-center mx-auto">
