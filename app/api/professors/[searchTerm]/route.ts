@@ -18,17 +18,18 @@ export async function GET(request: Request) {
     const connection = await getConnection();
     const [rows] = await connection.execute(`
       SELECT Name, SubjectName, Term, \`Course Num\` AS CourseNum, 
-             SUM(\`Strongly Agree\` + \`Agree\` + \`Neutral\` + \`Disagree\` + \`Strongly Disagree\`) as Entries,
-             ROUND(AVG(CASE WHEN LEFT(Response, 2) = '1.' THEN Average ELSE NULL END), 1) as AvgResponse1,
-             ROUND(AVG(CASE WHEN LEFT(Response, 2) = '2.' THEN Average ELSE NULL END), 1) as AvgResponse2,
-             ROUND(AVG(CASE WHEN LEFT(Response, 2) = '3.' THEN Average ELSE NULL END), 1) as AvgResponse3,
-             ROUND((AVG(CASE WHEN LEFT(Response, 2) = '1.' THEN Average ELSE NULL END) + 
-                    AVG(CASE WHEN LEFT(Response, 2) = '2.' THEN Average ELSE NULL END) + 
-                    AVG(CASE WHEN LEFT(Response, 2) = '3.' THEN Average ELSE NULL END)) / 3, 1) as OverallRating
-      FROM results
-      WHERE Name = ?
-      GROUP BY Name, SubjectName, Term, \`Course Num\`
-      ORDER BY Term, \`Course Num\`
+           SUM(\`Strongly Agree\` + \`Agree\` + \`Neutral\` + \`Disagree\` + \`Strongly Disagree\`) as Entries,
+           ROUND(AVG(CASE WHEN LEFT(Response, 2) = '1.' THEN Average ELSE NULL END), 1) as AvgResponse1,
+           ROUND(AVG(CASE WHEN LEFT(Response, 2) = '2.' THEN Average ELSE NULL END), 1) as AvgResponse2,
+           ROUND(AVG(CASE WHEN LEFT(Response, 2) = '3.' THEN Average ELSE NULL END), 1) as AvgResponse3,
+           ROUND((AVG(CASE WHEN LEFT(Response, 2) = '1.' THEN Average ELSE NULL END) + 
+                  AVG(CASE WHEN LEFT(Response, 2) = '2.' THEN Average ELSE NULL END) + 
+                  AVG(CASE WHEN LEFT(Response, 2) = '3.' THEN Average ELSE NULL END)) / 3, 1) as OverallRating
+    FROM results
+    WHERE Name = ?
+    GROUP BY Name, SubjectName, Term, \`Course Num\`
+    ORDER BY 
+      CAST(SUBSTRING_INDEX(Term, ' ', -1) AS UNSIGNED) ASC
       `, [name]);
     console.log(`Data retrieved for name ${name}:`, rows);
     return NextResponse.json(rows);
