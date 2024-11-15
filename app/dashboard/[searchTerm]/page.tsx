@@ -9,9 +9,9 @@ interface DashboardProps {
 }
 
 const Dashboard = async ({ params, searchParams }: DashboardProps) => {
-  const { searchTerm } = params;
-  const { baseURL } = searchParams;
-  
+  const { searchTerm } = await params;
+  const { baseURL } = await searchParams;
+
   // Fetch HTTP response from '/api/professors'
   const response = await fetch(`${baseURL}/api/professors/${encodeURIComponent(searchTerm)}`);
   
