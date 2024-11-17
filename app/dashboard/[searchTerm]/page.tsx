@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import InfoCard from "./../../components/InfoCard";
 import Image from "next/image";
 import TestimonialCard from "./../../components/TestimonialCard";
+import PostCreate from "../../components/PostCreate";
 
 interface DashboardProps {
   params: { searchTerm: string };
@@ -60,8 +61,8 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
 
         <div>
           <div className="w-2/3 mx-auto">
-            <div className="testimonial-buttons w-7/12 ml-auto flex justify-between py-5 px-6">
-              <button className="btn btn-outline place-self-center border-2">
+            <div className="testimonial-buttons flex justify-between py-5 px-6">
+              {/* <button className="btn btn-outline place-self-center border-2">
                 New Post
                 <Image
                   src="/plus.svg"
@@ -69,7 +70,10 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
                   width={20}
                   height={20}
                 />
-              </button>
+              </button> */}
+              <div>
+                <PostCreate />
+              </div>
               <button className="btn btn-outline border-2">
                 Filter
                 <Image
