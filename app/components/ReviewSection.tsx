@@ -32,6 +32,8 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
   const [reviewContent, setReviewContent] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [filter, setFilter] = useState<string>("Date");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -133,6 +135,27 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
       alert("Failed to submit review");
     }
   };
+
+  const handleFilterChange = (newFilter: string) => {
+    if (filter === newFilter) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setFilter(newFilter);
+      setSortOrder("desc");
+    }
+  };
+
+  const sortedReviews = [...reviews].sort((a, b) => {
+    let comparison = 0;
+    if (filter === "Date") {
+      comparison = new Date(b.date).getTime() - new Date(a.date).getTime();
+    } else if (filter === "Course Rating") {
+      comparison = b.courseRating - a.courseRating;
+    } else if (filter === "Professor Rating") {
+      comparison = b.professorRating - a.professorRating;
+    }
+    return sortOrder === "asc" ? -comparison : comparison;
+  });
 
   return (
     <div>
@@ -268,19 +291,69 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
             New Post
             <Image src="/plus.svg" alt="Plus symbol" width={20} height={20} />
           </button>
-          <button className="btn btn-outline border-2">
-            Filter
-            <Image
-              src="/filter.svg"
-              alt="Filter symbol"
-              width={20}
-              height={20}
-            />
-          </button>
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-outline place-self-center border-2 m-1">
+              Filter 
+              <Image src="/filter.svg" alt="Filter symbol" width={20} height={20} />
+            </div>
+            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+              <li>
+                <a
+                  className={`${filter === "Date" ? "bg-gray-200" : ""} hover:bg-gray-300`}
+                  onClick={() => handleFilterChange("Date")}
+                >
+                  Date
+                  {filter === "Date" && (
+                    <Image
+                      className="ml-auto"
+                      src={sortOrder === "asc" ? "/caret-up.svg" : "/caret-down.svg"}
+                      alt={sortOrder === "asc" ? "Ascending" : "Descending"}
+                      width={20}
+                      height={20}
+                    />
+                  )}
+                </a>
+              </li>
+              <li>
+                <a
+                  className={`${filter === "Course Rating" ? "bg-gray-200" : ""} hover:bg-gray-300`}
+                  onClick={() => handleFilterChange("Course Rating")}
+                >
+                  Course Rating
+                  {filter === "Course Rating" && (
+                    <Image
+                      className="ml-auto"
+                      src={sortOrder === "asc" ? "/caret-up.svg" : "/caret-down.svg"}
+                      alt={sortOrder === "asc" ? "Ascending" : "Descending"}
+                      width={20}
+                      height={20}
+                    />
+                  )}
+                </a>
+              </li>
+              <li>
+                <a
+                  className={`${filter === "Professor Rating" ? "bg-gray-200" : ""} hover:bg-gray-300`}
+                  onClick={() => handleFilterChange("Professor Rating")}
+                >
+                  Professor Rating
+                  {filter === "Professor Rating" && (
+                    <Image
+                      className="ml-auto"
+                      src={sortOrder === "asc" ? "/caret-up.svg" : "/caret-down.svg"}
+                      alt={sortOrder === "asc" ? "Ascending" : "Descending"}
+                      width={20}
+                      height={20}
+                    />
+                  )}
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div>
-        {reviews.map((review) => (
+        {sortedReviews.map((review) => (
           <TestimonialCard key={review.id} review={review} />
         ))}
       </div>

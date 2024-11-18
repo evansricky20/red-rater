@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 
 interface Review {
@@ -16,6 +16,10 @@ interface TestimonialCardProps {
 }
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ review }) => {
+  const [isLikeHovered, setIsLikeHovered] = useState(false);
+  const [isDislikeHovered, setIsDislikeHovered] = useState(false);
+  const [selectedButton, setSelectedButton] = useState<"like" | "dislike" | null>(null);
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -23,8 +27,6 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ review }) => {
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
   };
-
-  console.log('Review:', review);
 
   return (
     <div className="mb-10">
@@ -37,22 +39,38 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ review }) => {
           <div className="flex justify-between">
             <h4 className="text-2xl self-center">CS {review.course}</h4>
             <div className="w-32 flex justify-between">
-              <button>
+              <button
+                onMouseEnter={() => setIsLikeHovered(true)}
+                onMouseLeave={() => setIsLikeHovered(false)}
+                onClick={() => setSelectedButton("like")}
+              >
                 <Image 
                   src="/like.svg"
                   alt="Like symbol"
                   width={40}
                   height={40}
-                  style={{ filter: 'invert(1) brightness(100)' }}
+                  style={{
+                    filter: isLikeHovered || selectedButton === "like"
+                      ? 'invert(34%) sepia(91%) saturate(548%) hue-rotate(85deg) brightness(220%) contrast(89%)'
+                      : 'invert(1) brightness(100)',
+                  }}
                 />
               </button>
-              <button>
+              <button
+                onMouseEnter={() => setIsDislikeHovered(true)}
+                onMouseLeave={() => setIsDislikeHovered(false)}
+                onClick={() => setSelectedButton("dislike")}
+              >
                 <Image 
                   src="/dislike.svg"
                   alt="Dislike symbol"
                   width={40}
                   height={40}
-                  style={{ filter: 'invert(1) brightness(100)' }}
+                  style={{
+                    filter: isDislikeHovered || selectedButton === "dislike"
+                      ? 'invert(20%) sepia(100%) saturate(3500%) hue-rotate(0deg) brightness(150%) contrast(100%)'
+                      : 'invert(1) brightness(100)',
+                  }}
                 />
               </button>
             </div>
@@ -77,25 +95,6 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ review }) => {
               style={{ "--value": review.courseRating, "--size": "12rem", "--thickness": "1rem" } as React.CSSProperties} 
               role="progressbar">
                 <span className="text-white text-xl">{review.courseRating}%</span>
-            </div>
-          </div>
-
-          <div>
-            <p className="text-center text-2xl font-bold my-auto py-4">Professor Tags</p>
-            {/* Example descriptors, should be passed as an array function instead. */}
-            <div className="grid grid-cols-2 gap-4 my-4">
-              <div className="descriptor text-center bg-slate-300 rounded-sm p-2">
-                <span>Professor Descriptor...</span>
-              </div>
-              <div className="descriptor text-center bg-slate-300 rounded-sm p-2">
-                <span>Professor Descriptor...</span>
-              </div>
-              <div className="descriptor text-center bg-slate-300 rounded-sm p-2">
-                <span>Professor Descriptor...</span>
-              </div>
-              <div className="descriptor text-center bg-slate-300 rounded-sm p-2">
-                <span>Professor Descriptor...</span>
-              </div>
             </div>
           </div>
         </div>
