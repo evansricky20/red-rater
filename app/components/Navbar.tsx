@@ -44,6 +44,7 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
       });
       if (response.ok) {
         setUser(null);
+        window.location.reload(); // Refresh the page
       }
     } catch (error) {
       console.error('Logout failed:', error);
@@ -135,7 +136,6 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
             )}
           </div>
         </div>
-        {/* Content goes here */}
       </div>
       {/* drawer-side: side bar container */}
       <div className="drawer-side h-screen overflow-auto">

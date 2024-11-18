@@ -39,8 +39,7 @@ const Login = () => {
         loginModal.close();
       }
       
-      // Reload the page
-      window.location.href = "/";
+      window.location.reload(); // Refresh the page
     } catch (error) {
       // Handle errors (display error message)
       setError("Invalid email or password.");
