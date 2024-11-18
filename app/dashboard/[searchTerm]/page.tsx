@@ -13,14 +13,18 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
   const { baseURL } = searchParams;
 
   // Fetch HTTP response from '/api/professors'
-  const response = await fetch(`${baseURL}/api/professors/${encodeURIComponent(searchTerm)}`);
-  
-  if (!response.ok) { // Confirm successful HTTP response
+  const response = await fetch(
+    `${baseURL}/api/professors/${encodeURIComponent(searchTerm)}`
+  );
+
+  if (!response.ok) {
+    // Confirm successful HTTP response
     notFound();
   }
   const data = await response.json();
 
-  if (!data || data.length === 0) { // Confirm data was retrieved from DB
+  if (!data || data.length === 0) {
+    // Confirm data was retrieved from DB
     notFound();
   }
 
@@ -45,26 +49,26 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
         </section>
       </div>
       <section className="testimonial-section h-fit flex flex-col justify-center mx-auto">
-        <div className="flex-1 border-b-4 border-black bg-red-600 font-bold">
+        <div className="flex-1 content-center border-b-4 border-black bg-red-600 font-bold">
           <div className="lineart-element flex">
-            <div style={{ transform: 'scaleX(-1)' }}>
-              <Image
-                src="/TTU_Horizontal_Lineart_black.png"
-                alt="TTU line art decal."
-                width={1000}
-                height={100}
-                style={{ width: '100%', height: '100%' }}
-              />
-            </div>
+            <Image
+              src="/TTU_Horizontal_Lineart_black.png"
+              alt="TTU line art decal."
+              width={1000}
+              height={100}
+              style={{ width: "50%", height: "100%" }}
+            />
             <Image
               src="/TTU_Horizontal_Lineart_white.png"
               alt="TTU line art decal."
               width={1000}
               height={100}
-              style={{ width: '50%', height: '100%' }}
+              style={{ width: "50%", height: "100%" }}
             />
           </div>
-          <h2 className="text-center text-3xl text-white p-4">Student Testimonials</h2>
+          <h2 className="text-center text-3xl text-white p-4">
+            Student Testimonials
+          </h2>
         </div>
         <ReviewSection courses={transformedProfile.courses} professorName={transformedProfile.name} />
       </section>

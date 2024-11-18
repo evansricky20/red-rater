@@ -28,7 +28,10 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
   const [data, setData] = useState<any[]>([]); // Store raw data
   const [overallRating, setOverallRating] = useState<number>(0); // Initialize overallRating to 0
-  const [lineGraphData, setLineGraphData] = useState<{ term: string; rating: number }[]>([]); // Data for LineGraph
+  const [profoverallRating, setProfOverallRating] = useState<number>(0);
+  const [lineGraphData, setLineGraphData] = useState<
+    { term: string; rating: number }[]
+  >([]); // Data for LineGraph
 
   const fetchProfile = async () => {
     try {
@@ -47,12 +50,23 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
         subjectName: data[0].SubjectName,
         terms: Array.from(new Set(data.map((item: any) => item.Term))),
         courses: Array.from(new Set(data.map((item: any) => item.CourseNum))),
-        entries: data.reduce((acc: number, item: any) => acc + parseInt(item.Entries, 10), 0),
+        entries: data.reduce(
+          (acc: number, item: any) => acc + parseInt(item.Entries, 10),
+          0
+        ),
         avgResponse1: parseFloat(data[0].AvgResponse1),
         avgResponse2: parseFloat(data[0].AvgResponse2),
         avgResponse3: parseFloat(data[0].AvgResponse3),
-        overallRating: Math.round((parseFloat(data[0].OverallRating) / 5) * 100),
+        overallRating: Math.round(
+          (parseFloat(data[0].OverallRating) / 5) * 100
+        ),
       };
+      const totalRating = data.reduce(
+        (sum: number, item: any) => sum + parseFloat(item.OverallRating),
+        0
+      );
+      const averageRating = totalRating / data.length;
+      setProfOverallRating(Math.round((averageRating / 5) * 100));
 
       profile = transformedProfile;
     } catch (error) {
@@ -68,9 +82,13 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
 
   useEffect(() => {
     if (selectedCourse) {
-      const terms = Array.from(new Set(data
-        .filter((item: any) => item.CourseNum === parseInt(selectedCourse))
-        .map((item: any) => item.Term)));
+      const terms = Array.from(
+        new Set(
+          data
+            .filter((item: any) => item.CourseNum === parseInt(selectedCourse))
+            .map((item: any) => item.Term)
+        )
+      );
       setFilteredTerms(terms);
 
       // Extract overallRating and Term for the selected course
@@ -97,10 +115,13 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
     if (selectedCourse && selectedTerm) {
       const selectedData = data.find(
         (item: any) =>
-          item.CourseNum === parseInt(selectedCourse) && item.Term === selectedTerm
+          item.CourseNum === parseInt(selectedCourse) &&
+          item.Term === selectedTerm
       );
       if (selectedData) {
-        const newOverallRating = Math.round((parseFloat(selectedData.OverallRating) / 5) * 100);
+        const newOverallRating = Math.round(
+          (parseFloat(selectedData.OverallRating) / 5) * 100
+        );
         animateOverallRating(newOverallRating);
       }
     }
@@ -150,7 +171,9 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   return (
     <div className="pt-10 pb-5 w-3/4">
       <h1 className="text-6xl font-bold max-w-5xl">{profile.name}</h1>
-      <h2 className="text-2xl text-red-600 font-bold max-w-3xl px-1 pb-2">{profile.subjectName}</h2>
+      <h2 className="text-2xl text-red-600 font-bold max-w-3xl px-1 pb-2">
+        {profile.subjectName}
+      </h2>
       <div className="flex">
         <div className="flex flex-col w-1/2">
           <div className="flex justify-between">
@@ -170,9 +193,13 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               onChange={handleTermChange}
               disabled={!selectedCourse} // Disable the term dropdown if no course is selected
             >
-              <option value="" disabled>Term</option>
+              <option value="" disabled>
+                Term
+              </option>
               {filteredTerms.map((term) => (
-                <option key={term} value={term}>{term}</option>
+                <option key={term} value={term}>
+                  {term}
+                </option>
               ))}
             </select>
           </div>
@@ -201,24 +228,50 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
           </div>
         </div>
         <div className="data-board flex flex-col w-1/2">
-          <h3 className="text-center text-4xl font-bold my-auto pb-3">
-            Overall Rating
-          </h3>
-          <div className="self-center">
-            <div
-              className="radial-progress bg-white text-red-600 border-4 border-black"
-              style={
-                {
-                  "--value": overallRating,
-                  "--size": "16rem",
-                  "--thickness": "2rem",
-                } as React.CSSProperties
-              }
-              role="progressbar"
-            >
-              <span className="text-black text-4xl font-semibold">
-                {Math.round(overallRating)}%
-              </span>
+          <div className="flex flex-row content-center items-center justify-around">
+            <div>
+              <h3 className="text-center text-4xl font-bold my-auto pb-3">
+                Course Rating
+              </h3>
+              <div className="self-center">
+                <div
+                  className="radial-progress bg-white text-red-600 border-4 border-black"
+                  style={
+                    {
+                      "--value": overallRating,
+                      "--size": "16rem",
+                      "--thickness": "2rem",
+                    } as React.CSSProperties
+                  }
+                  role="progressbar"
+                >
+                  <span className="text-black text-4xl font-semibold">
+                    {Math.round(overallRating)}%
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-center text-4xl font-bold my-auto pb-3">
+                Overall Rating
+              </h3>
+              <div className="self-center">
+                <div
+                  className="radial-progress bg-white text-red-600 border-4 border-black"
+                  style={
+                    {
+                      "--value": profoverallRating,
+                      "--size": "16rem",
+                      "--thickness": "2rem",
+                    } as React.CSSProperties
+                  }
+                  role="progressbar"
+                >
+                  <span className="text-black text-4xl font-semibold">
+                    {Math.round(profoverallRating)}%
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           <Image
