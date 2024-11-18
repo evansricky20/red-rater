@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import InfoCard from './../../components/InfoCard';
 import Image from 'next/image';
-import TestimonialCard from './../../components/TestimonialCard';
+import ReviewSection from './../../components/ReviewSection';
 
 interface DashboardProps {
   params: { searchTerm: string };
@@ -9,8 +9,8 @@ interface DashboardProps {
 }
 
 const Dashboard = async ({ params, searchParams }: DashboardProps) => {
-  const { searchTerm } = await params;
-  const { baseURL } = await searchParams;
+  const { searchTerm } = params;
+  const { baseURL } = searchParams;
 
   // Fetch HTTP response from '/api/professors'
   const response = await fetch(`${baseURL}/api/professors/${encodeURIComponent(searchTerm)}`);
@@ -24,11 +24,24 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
     notFound();
   }
 
+  // Transform the data to match the Profile interface
+  const transformedProfile = {
+    name: data[0].Name,
+    subjectName: data[0].SubjectName,
+    terms: Array.from(new Set(data.map((item: any) => item.Term))),
+    courses: Array.from(new Set(data.map((item: any) => item.CourseNum))) as string[],
+    entries: data.reduce((acc: number, item: any) => acc + parseInt(item.Entries, 10), 0),
+    avgResponse1: parseFloat(data[0].AvgResponse1),
+    avgResponse2: parseFloat(data[0].AvgResponse2),
+    avgResponse3: parseFloat(data[0].AvgResponse3),
+    overallRating: Math.round((parseFloat(data[0].OverallRating) / 5) * 100),
+  };
+
   return (
     <main className="h-screen">
       <div className="bg-hero bg-cover bg-center pt-20">
         <section className="info-section bg-white h-fit w-10/12 flex justify-center mx-auto mt-10">
-          <InfoCard searchTerm={searchTerm}/>
+          <InfoCard searchTerm={searchTerm} profile={transformedProfile} />
         </section>
       </div>
       <section className="testimonial-section h-fit flex flex-col justify-center mx-auto">
@@ -53,22 +66,7 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
           </div>
           <h2 className="text-center text-3xl text-white p-4">Student Testimonials</h2>
         </div>
-
-        <div>
-          <div className="w-2/3 mx-auto">
-            <div className="testimonial-buttons w-7/12 ml-auto flex justify-between py-5 px-6">
-              <button className="btn btn-outline place-self-center border-2">
-                New Post
-                <Image src="/plus.svg" alt="Plus symbol" width={20} height={20} />
-              </button>
-              <button className="btn btn-outline border-2">
-                Filter
-                <Image src="/filter.svg" alt="Filter symbol" width={20} height={20} />
-              </button>
-            </div>
-          </div>
-          <TestimonialCard />
-        </div>
+        <ReviewSection courses={transformedProfile.courses} professorName={transformedProfile.name} />
       </section>
     </main>
   );
