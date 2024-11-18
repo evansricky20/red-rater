@@ -9,8 +9,8 @@ interface DashboardProps {
 }
 
 const Dashboard = async ({ params, searchParams }: DashboardProps) => {
-  const { searchTerm } = params;
-  const { baseURL } = searchParams;
+  const { searchTerm } = await params;
+  const { baseURL } = await searchParams;
 
   // Fetch HTTP response from '/api/professors'
   const response = await fetch(
@@ -66,9 +66,7 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
               style={{ width: "50%", height: "100%" }}
             />
           </div>
-          <h2 className="text-center text-3xl text-white p-4">
-            Student Testimonials
-          </h2>
+          <h2 className="text-center text-3xl text-white p-4">Student Testimonials</h2>
         </div>
         <ReviewSection courses={transformedProfile.courses} professorName={transformedProfile.name} />
       </section>
