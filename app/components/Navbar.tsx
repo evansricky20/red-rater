@@ -126,10 +126,10 @@ const Navbar = ({
                   className="text-white dropdown-content menu bg-gray-900 rounded-box z-[1] w-52 p-2 shadow"
                 >
                   <li>
-                    <a>Edit Profile</a>
+                    <a className="hover:bg-gray-600">Edit Profile</a>
                   </li>
                   <li>
-                    <a onClick={logout}>Logout</a>
+                    <a className="hover:bg-gray-600" onClick={logout}>Logout</a>
                   </li>
                 </ul>
               </div>
