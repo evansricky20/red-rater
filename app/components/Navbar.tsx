@@ -7,9 +7,15 @@ import React, { useEffect, useState } from "react";
 import Signup from "./Signup";
 import Login from "./Login";
 
-const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string } | null }) => {
+const Navbar = ({
+  initialUser,
+}: {
+  initialUser: { fname: string; lname: string } | null;
+}) => {
   // State variables
-  const [user, setUser] = useState<{ fname: string; lname: string } | null>(initialUser);
+  const [user, setUser] = useState<{ fname: string; lname: string } | null>(
+    initialUser
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,7 +23,7 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
     if (!initialUser) {
       const fetchUser = async () => {
         try {
-          const response = await fetch('/api/auth/user');
+          const response = await fetch("/api/auth/user");
           if (response.ok) {
             const data = await response.json();
             setUser(data);
@@ -39,15 +45,15 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
   const logout = async () => {
     try {
       // Fetch logout route
-      const response = await fetch('/api/auth/logout', {
-        method: 'POST',
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
       });
       if (response.ok) {
         setUser(null);
         window.location.reload(); // Refresh the page
       }
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
@@ -78,15 +84,17 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
               style={{ width: "100%", height: "100%" }}
             />
           </label>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center pt-4 bg-red-600 h-28 w-24 z-50">
-            <Image
-              src="/DoubleT.png"
-              alt="TTU DoubleT"
-              width={100}
-              height={100}
-              style={{ width: "85%", height: "90%" }}
-            />
-          </div>
+          <Link href="/">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center pt-5 bg-ttu-red h-28 w-24 z-50">
+              <Image
+                src="/DoubleT.png"
+                alt="TTU DoubleT"
+                width={100}
+                height={100}
+                style={{ width: "85%", height: "90%" }}
+              />
+            </div>
+          </Link>
           <div className="absolute h-fit w-fit right-1 md:right-1 lg:right-16 2xl:right-52">
             {loading ? (
               // Render loading while waiting for data fetch
@@ -97,13 +105,32 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
             ) : user ? (
               // If not loading, and user is not null, render user component
               <div className="dropdown dropdown-bottom dropdown-end">
-                <div tabIndex={0} role="button" className="btn bg-transparent hover:bg-gray-700 border-0 w-fit px-2 flex items-center space-x-2">
-                  <Image src="/user-avatar-light.svg" alt="User profile picture" width={50} height={50} style={{ filter: "invert(100%)" }} />
-                  <span className="text-white text-xl">{user.lname}, {user.fname}</span>
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn bg-transparent hover:bg-gray-700 border-0 w-fit px-2 flex items-center space-x-2"
+                >
+                  <Image
+                    src="/user-avatar-light.svg"
+                    alt="User profile picture"
+                    width={50}
+                    height={50}
+                    style={{ filter: "invert(100%)" }}
+                  />
+                  <span className="text-white text-xl">
+                    {user.lname}, {user.fname}
+                  </span>
                 </div>
-                <ul tabIndex={0} className="text-white dropdown-content menu bg-gray-900 rounded-box z-[1] w-52 p-2 shadow">
-                  <li><a>Edit Profile</a></li>
-                  <li><a onClick={logout}>Logout</a></li>
+                <ul
+                  tabIndex={0}
+                  className="text-white dropdown-content menu bg-gray-900 rounded-box z-[1] w-52 p-2 shadow"
+                >
+                  <li>
+                    <a>Edit Profile</a>
+                  </li>
+                  <li>
+                    <a onClick={logout}>Logout</a>
+                  </li>
                 </ul>
               </div>
             ) : (
@@ -111,7 +138,7 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
               // Login & Signup Buttons
               <>
                 <button
-                  className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-red-600 text-2xl font-bold p-10 hidden md:flex"
+                  className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-ttu-red text-2xl font-bold p-10 hidden md:flex"
                   onClick={() => {
                     const modal = document.getElementById("login_modal");
                     if (modal) {
@@ -122,7 +149,7 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
                   Login
                 </button>
                 <button
-                  className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-red-600 text-2xl font-bold p-10 hidden md:flex"
+                  className="btn btn-ghost hover:bg-transparent h-auto cursor-pointer text-ttu-red text-2xl font-bold p-10 hidden md:flex"
                   onClick={() => {
                     const modal = document.getElementById("signup_modal");
                     if (modal) {
@@ -142,7 +169,7 @@ const Navbar = ({ initialUser }: { initialUser: { fname: string; lname: string }
         {/* drawer-overlay: a dark overlay that covers the screen when drawer is open */}
         <label htmlFor="my-drawer" className="drawer-overlay"></label>
         {/* list for links in side bar */}
-        <ul className="flex flex-col items-start text-left pt-40 pl-6 lg:pl-15 2xl:pl-20 bg-red-600 h-full w-full md:w-1/2 overflow-hidden">
+        <ul className="flex flex-col items-start text-left pt-40 pl-6 lg:pl-15 2xl:pl-20 bg-ttu-red h-full w-full md:w-1/2 overflow-hidden">
           <div className="absolute top-10 left-0 z-50 w-16 2xl:w-20">
             <Image
               src="/TTU_Lineart_black.png"
