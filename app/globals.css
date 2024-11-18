@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: "Helvetica";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/fonts/HelveticaNeueMedium.otf) format("opentype");
+  }
+  @font-face {
+    font-family: "Helvetica";
+    font-style: normal;
+    font-weight: bold;
+    font-display: swap;
+    src: url(/fonts/HelveticaNeueBold.otf) format("opentype");
+  }
+  @font-face {
+    font-family: "Helvetica";
+    font-style: normal;
+    font-weight: bolder;
+    font-display: swap;
+    src: url(/fonts/HelveticaNeueBlack.otf) format("opentype");
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

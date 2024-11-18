@@ -2,12 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
-import { Montserrat } from "next/font/google";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 // Home Page
 export default function Home() {
@@ -24,14 +18,10 @@ export default function Home() {
             style={{ width: "100%", height: "100%" }}
           />
         </div>
-        <h1
-          className={`${montserrat.className} text-4xl text-red-600 font-bold pb-0 sm:text-5xl md:text-6xl 2xl:text-8xl`}
-        >
+        <h1 className="text-4xl text-red-600 font-bold pb-0 sm:text-5xl md:text-6xl 2xl:text-8xl">
           Red Rater
         </h1>
-        <p
-          className={`${montserrat.className} text-sm font-bold text-center pb-5 sm:text-base lg:text-lg 2xl:text-2xl`}
-        >
+        <p className="text-sm font-bold text-center pb-5 sm:text-base lg:text-lg 2xl:text-2x">
           Professor and Course Evaluation Tool
         </p>
         <div className="pt-10 w-auto sm:w-1/2 lg:w-2/5 2xl:w-1/4">
@@ -39,8 +29,7 @@ export default function Home() {
         </div>
         <label
           htmlFor="ai-drawer"
-          className={`${montserrat.className} btn shadow-none border-none bg-transparent hover:bg-transparent text-xs font-bold text-center pb-5 sm:text-sm lg:text-md 2xl:text-lg px-10
-            `}
+          className="btn shadow-none border-none bg-transparent hover:bg-transparent text-xs font-bold text-center pb-5 sm:text-sm lg:text-md 2xl:text-lg px-10"
         >
           Can't find the right fit? Click here to try our AI tool.
         </label>

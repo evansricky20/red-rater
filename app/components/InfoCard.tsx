@@ -165,19 +165,25 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
 
   return (
     <div className="pt-10 pb-5 w-3/4">
-      <h1 className="text-6xl font-bold max-w-5xl">{profile.name}</h1>
-      <h2 className="text-2xl text-red-600 font-bold max-w-3xl px-1 pb-2">
+      <div className="bg-black w-fit p-5">
+        <h1 className="text-slate-100 text-6xl font-helvetica uppercase font-black max-w-5xl">
+          {profile.name}
+        </h1>
+      </div>
+      <h2 className="text-3xl text-helvetica font-bold max-w-3xl px-1 pb-2">
         {profile.subjectName}
       </h2>
       <div className="flex">
-        <div className="flex flex-col w-1/2">
+        <div className="flex flex-col w-1/2 pr-5">
           <div className="flex justify-between">
             <select
-              className="select select-bordered max-w-xs font-bold"
+              className="select bg-white  select-bordered max-w-xs font-bold"
               defaultValue=""
               onChange={handleCourseChange}
             >
-              <option value="" disabled>Course List</option>
+              <option value="" disabled>
+                Course List
+              </option>
               {profile.courses.map((course: string) => (
                 <option key={course} value={course}>{`CS ${course}`}</option>
               ))}
@@ -222,15 +228,17 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
             <LineGraph data={lineGraphData} />
           </div>
         </div>
-        <div className="data-board flex flex-col w-1/2">
-          <div className="flex flex-row content-center items-center justify-around">
+        <div className="data-board flex flex-col w-1/2 pl-5">
+          <div className="flex flex-row content-center justify-between items-center">
             <div>
-              <h3 className="text-center text-4xl font-bold my-auto pb-3">
-                Course Rating
-              </h3>
+              <div className="bg-black h-fit w-fit p-3 mb-3">
+                <h3 className="font-helvetica text-center text-slate-100 text-4xl font-bold">
+                  Course Rating
+                </h3>
+              </div>
               <div className="self-center">
                 <div
-                  className="radial-progress bg-white text-red-600 border-4 border-black"
+                  className="radial-progress bg-white text-ttu-red border-4 border-black"
                   style={
                     {
                       "--value": overallRating,
@@ -247,12 +255,14 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               </div>
             </div>
             <div>
-              <h3 className="text-center text-4xl font-bold my-auto pb-3">
-                Overall Rating
-              </h3>
+              <div className="bg-black h-fit w-fit p-3 mb-3">
+                <h3 className="font-helvetica text-center text-slate-100 text-4xl font-bold">
+                  Overall Rating
+                </h3>
+              </div>
               <div className="self-center">
                 <div
-                  className="radial-progress bg-white text-red-600 border-4 border-black"
+                  className="radial-progress bg-white text-ttu-gold border-4 border-black"
                   style={
                     {
                       "--value": profOverallRating,
@@ -269,13 +279,13 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               </div>
             </div>
           </div>
-          <Image
+          {/* <Image
             src="/bubble_example.png"
             alt="example bubbles"
             width={1000}
             height={100}
             style={{ width: "100%", height: "100%" }}
-          />
+          /> */}
         </div>
       </div>
     </div>

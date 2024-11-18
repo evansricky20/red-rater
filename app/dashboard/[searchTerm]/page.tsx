@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation';
-import InfoCard from './../../components/InfoCard';
-import Image from 'next/image';
-import ReviewSection from './../../components/ReviewSection';
+import { notFound } from "next/navigation";
+import InfoCard from "./../../components/InfoCard";
+import Image from "next/image";
+import ReviewSection from "./../../components/ReviewSection";
 
 interface DashboardProps {
   params: { searchTerm: string };
@@ -33,8 +33,13 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
     name: data[0].Name,
     subjectName: data[0].SubjectName,
     terms: Array.from(new Set(data.map((item: any) => item.Term))),
-    courses: Array.from(new Set(data.map((item: any) => item.CourseNum))) as string[],
-    entries: data.reduce((acc: number, item: any) => acc + parseInt(item.Entries, 10), 0),
+    courses: Array.from(
+      new Set(data.map((item: any) => item.CourseNum))
+    ) as string[],
+    entries: data.reduce(
+      (acc: number, item: any) => acc + parseInt(item.Entries, 10),
+      0
+    ),
     avgResponse1: parseFloat(data[0].AvgResponse1),
     avgResponse2: parseFloat(data[0].AvgResponse2),
     avgResponse3: parseFloat(data[0].AvgResponse3),
@@ -44,7 +49,7 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
   return (
     <main className="h-screen">
       <div className="bg-hero bg-cover bg-center pt-20">
-        <section className="info-section bg-white h-fit w-10/12 flex justify-center mx-auto mt-10">
+        <section className="info-section bg-ttu-red h-fit w-10/12 rounded-tl-lg rounded-tr-lg flex justify-center mx-auto mt-10">
           <InfoCard searchTerm={searchTerm} profile={transformedProfile} />
         </section>
       </div>
@@ -68,7 +73,10 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
           </div>
           <h2 className="text-center text-3xl text-white p-4">Student Testimonials</h2>
         </div>
-        <ReviewSection courses={transformedProfile.courses} professorName={transformedProfile.name} />
+        <ReviewSection
+          courses={transformedProfile.courses}
+          professorName={transformedProfile.name}
+        />
       </section>
     </main>
   );
