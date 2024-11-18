@@ -141,6 +141,7 @@ const Signup = () => {
                                 placeholder="ex: johndoe@example.com"
                                 value={email}
                                 onChange={handleEmail}
+                                required
                             />
                         </label>
                         <h4 className="font-bold text-xl">Password</h4>
@@ -150,6 +151,7 @@ const Signup = () => {
                                 className="grow" 
                                 value={password}
                                 onChange={handlePassword}
+                                required
                             />
                         </label>
                         <button 
