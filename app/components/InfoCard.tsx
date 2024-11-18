@@ -29,7 +29,9 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   const [data, setData] = useState<any[]>([]); // Store raw data
   const [overallRating, setOverallRating] = useState<number>(0); // Initialize overallRating to 0
   const [profOverallRating, setProfOverallRating] = useState<number>(0); // Initialize profOverallRating to 0
-  const [lineGraphData, setLineGraphData] = useState<{ term: string; rating: number }[]>([]); // Data for LineGraph
+  const [lineGraphData, setLineGraphData] = useState<
+    { term: string; rating: number }[]
+  >([]); // Data for LineGraph
 
   const fetchProfile = async () => {
     try {
@@ -59,7 +61,10 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
           (parseFloat(data[0].OverallRating) / 5) * 100
         ),
       };
-      const totalRating = data.reduce((sum: number, item: any) => sum + parseFloat(item.OverallRating), 0);
+      const totalRating = data.reduce(
+        (sum: number, item: any) => sum + parseFloat(item.OverallRating),
+        0
+      );
       const averageRating = totalRating / data.length;
       setProfOverallRating(Math.round((averageRating / 5) * 100));
 
@@ -164,20 +169,20 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   }
 
   return (
-    <div className="pt-10 pb-5 w-3/4">
-      <div className="bg-black w-fit p-5">
-        <h1 className="text-slate-100 text-6xl font-helvetica uppercase font-black max-w-5xl">
+    <div className="flex flex-col w-full p-5 lg:p-10 2xl:px-32 overflow-hidden">
+      <div className="bg-black text-center w-full md:w-1/2 lg:w-fit p-5 overflow-hidden">
+        <h1 className="text-slate-100 text-2xl lg:text-6xl font-helvetica uppercase font-black max-w-5xl">
           {profile.name}
         </h1>
       </div>
       <h2 className="text-3xl text-helvetica font-bold max-w-3xl px-1 pb-2">
         {profile.subjectName}
       </h2>
-      <div className="flex">
-        <div className="flex flex-col w-1/2 pr-5">
+      <div className="flex flex-col lg:flex-row overflow-hidden">
+        <div className="flex flex-col lg:w-full lg:px-5">
           <div className="flex justify-between">
             <select
-              className="select bg-white  select-bordered max-w-xs font-bold"
+              className="select bg-white select-bordered w-1/2 max-w-40 font-bold mr-1"
               defaultValue=""
               onChange={handleCourseChange}
             >
@@ -189,7 +194,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               ))}
             </select>
             <select
-              className="select select-bordered max-w-xs font-bold"
+              className="select bg-white select-bordered w-1/2 max-w-40 font-bold ml-1"
               value={selectedTerm || ""}
               onChange={handleTermChange}
               disabled={!selectedCourse} // Disable the term dropdown if no course is selected
@@ -204,23 +209,23 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               ))}
             </select>
           </div>
-          <div className="grid grid-cols-2 gap-4 my-4">
-            <p className="flex items-center justify-center w-fit min-w-64 bg-gray-400 rounded-md h-10 p-1 font-bold">
+          <div className="grid grid-cols-2 gap-4 my-4 w-full sm:w-auto ">
+            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
               Descriptor
             </p>
-            <p className="flex items-center justify-center w-fit min-w-64 bg-gray-400 rounded-md h-10 p-1 font-bold">
+            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
               Descriptor
             </p>
-            <p className="flex items-center justify-center w-fit min-w-64 bg-gray-400 rounded-md h-10 p-1 font-bold">
+            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
               Descriptor
             </p>
-            <p className="flex items-center justify-center w-fit min-w-64 bg-gray-400 rounded-md h-10 p-1 font-bold">
+            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
               Descriptor
             </p>
-            <p className="flex items-center justify-center w-fit min-w-64 bg-gray-400 rounded-md h-10 p-1 font-bold">
+            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
               Descriptor
             </p>
-            <p className="flex items-center justify-center w-fit min-w-64 bg-gray-400 rounded-md h-10 p-1 font-bold">
+            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
               Descriptor
             </p>
           </div>
@@ -228,11 +233,11 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
             <LineGraph data={lineGraphData} />
           </div>
         </div>
-        <div className="data-board flex flex-col w-1/2 pl-5">
-          <div className="flex flex-row content-center justify-between items-center">
-            <div>
-              <div className="bg-black h-fit w-fit p-3 mb-3">
-                <h3 className="font-helvetica text-center text-slate-100 text-4xl font-bold">
+        <div className="data-board flex flex-col w-full sm:p-5 sm:pt-0 overflow-hidden">
+          <div className="flex flex-col lg:flex-row content-center justify-center items-center">
+            <div className="w-full flex flex-col justify-center items-center pb-5 px-1">
+              <div className="bg-black h-fit w-fit p-3 mb-3 ">
+                <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
                   Course Rating
                 </h3>
               </div>
@@ -242,8 +247,8 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
                   style={
                     {
                       "--value": overallRating,
-                      "--size": "16rem",
-                      "--thickness": "2rem",
+                      "--size": "8rem",
+                      "--thickness": "10px",
                     } as React.CSSProperties
                   }
                   role="progressbar"
@@ -254,9 +259,9 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
                 </div>
               </div>
             </div>
-            <div>
+            <div className="w-full flex flex-col justify-center items-center pb-5 px-1">
               <div className="bg-black h-fit w-fit p-3 mb-3">
-                <h3 className="font-helvetica text-center text-slate-100 text-4xl font-bold">
+                <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
                   Overall Rating
                 </h3>
               </div>
@@ -266,8 +271,8 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
                   style={
                     {
                       "--value": profOverallRating,
-                      "--size": "16rem",
-                      "--thickness": "2rem",
+                      "--size": "8rem",
+                      "--thickness": "10px",
                     } as React.CSSProperties
                   }
                   role="progressbar"
