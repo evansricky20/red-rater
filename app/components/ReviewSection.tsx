@@ -114,7 +114,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courses, professorName })
               <div className="modal-action flex flex-col w-full">
                 <form className="w-full" onSubmit={handleSubmit}>
                   <div>
-                    <div className="pb-4">
+                    <div className="pb-2">
                       <h4>Select the course to review. <span className="text-red-600">*</span></h4>
                       <select 
                         className="select select-bordered max-w-xs font-bold"
@@ -128,7 +128,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courses, professorName })
                         ))}
                       </select>
                     </div>
-                    <div className="pb-4">
+                    <div className="pb-2">
                       <h4>What is your overall rating of the professor? <span className="text-red-600">*</span></h4>
                       <p className="italic text-gray-400">Click and drag to set your rating</p>
                       <input 
@@ -149,7 +149,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courses, professorName })
                         <span>100%</span>
                       </div>
                     </div>
-                    <div className="pb-4">
+                    <div className="pb-2">
                       <h4>What is your overall rating of the course? <span className="text-red-600">*</span></h4>
                       <p className="italic text-gray-400">Click and drag to set your rating</p>
                       <input 
@@ -170,7 +170,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courses, professorName })
                         <span>100%</span>
                       </div>
                     </div>
-                    <div className="pb-4">
+                    <div className="pb-2">
                       <h4>Write your review here <span className="text-red-600">*</span></h4>
                       <textarea 
                         placeholder="Type here" 
@@ -180,7 +180,9 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courses, professorName })
                         required
                       ></textarea>
                     </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <div className="flex justify-center">
+                      <button type="submit" className="btn bg-red-600 text-white w-1/2">Submit</button>
+                    </div>
                   </div>
                 </form>
               </div>
