@@ -11,7 +11,7 @@ interface ReviewSectionProps {
 
 interface Review {
   id: number;
-  name: string;
+  userName: string;
   course: string;
   date: string;
   professorRating: number;
@@ -86,7 +86,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courses, professorName })
     };
 
     const reviewData = {
-      name: `${user?.lname}, ${user?.fname}`,
+      userName: `${user?.lname}, ${user?.fname}`,
       course: selectedCourse,
       date: formatDate(new Date()), // Format the date to YYYY-MM-DD
       professorRating,
@@ -115,6 +115,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courses, professorName })
         setProfessorRating(25);
         setCourseRating(25);
         setReviewContent('');
+
         // Fetch the updated reviews
         fetchReviews();
       } else {
