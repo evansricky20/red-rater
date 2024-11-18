@@ -28,10 +28,8 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
   const [data, setData] = useState<any[]>([]); // Store raw data
   const [overallRating, setOverallRating] = useState<number>(0); // Initialize overallRating to 0
-  const [profoverallRating, setProfOverallRating] = useState<number>(0);
-  const [lineGraphData, setLineGraphData] = useState<
-    { term: string; rating: number }[]
-  >([]); // Data for LineGraph
+  const [profOverallRating, setProfOverallRating] = useState<number>(0); // Initialize profOverallRating to 0
+  const [lineGraphData, setLineGraphData] = useState<{ term: string; rating: number }[]>([]); // Data for LineGraph
 
   const fetchProfile = async () => {
     try {
@@ -61,10 +59,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
           (parseFloat(data[0].OverallRating) / 5) * 100
         ),
       };
-      const totalRating = data.reduce(
-        (sum: number, item: any) => sum + parseFloat(item.OverallRating),
-        0
-      );
+      const totalRating = data.reduce((sum: number, item: any) => sum + parseFloat(item.OverallRating), 0);
       const averageRating = totalRating / data.length;
       setProfOverallRating(Math.round((averageRating / 5) * 100));
 
@@ -260,7 +255,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
                   className="radial-progress bg-white text-red-600 border-4 border-black"
                   style={
                     {
-                      "--value": profoverallRating,
+                      "--value": profOverallRating,
                       "--size": "16rem",
                       "--thickness": "2rem",
                     } as React.CSSProperties
@@ -268,7 +263,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
                   role="progressbar"
                 >
                   <span className="text-black text-4xl font-semibold">
-                    {Math.round(profoverallRating)}%
+                    {Math.round(profOverallRating)}%
                   </span>
                 </div>
               </div>
