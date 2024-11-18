@@ -6,6 +6,7 @@ import LineGraph from "./LineGraph";
 
 interface InfoCardProps {
   searchTerm: string;
+  profile: any;
 }
 
 interface Profile {
@@ -20,8 +21,7 @@ interface Profile {
   overallRating: number;
 }
 
-const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   const [loading, setLoading] = useState(true);
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [filteredTerms, setFilteredTerms] = useState<string[]>([]);
@@ -54,7 +54,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
         overallRating: Math.round((parseFloat(data[0].OverallRating) / 5) * 100),
       };
 
-      setProfile(transformedProfile);
+      profile = transformedProfile;
     } catch (error) {
       console.error("Failed to fetch profile:", error);
     } finally {
@@ -160,7 +160,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm }) => {
               onChange={handleCourseChange}
             >
               <option value="" disabled>Course List</option>
-              {profile.courses.map((course) => (
+              {profile.courses.map((course: string) => (
                 <option key={course} value={course}>{`CS ${course}`}</option>
               ))}
             </select>
