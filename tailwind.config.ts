@@ -11,6 +11,8 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "ttu-red": "#CC0000",
+        "ttu-gold": "#CB9F5B",
       },
 
       screens: {
@@ -19,6 +21,10 @@ const config: Config = {
 
       backgroundImage: {
         hero: "url('/Hero.jpg')",
+      },
+
+      fontFamily: {
+        helvetica: ['"Helvetica Neue"', "Arial", "sans-serif"],
       },
     },
   },

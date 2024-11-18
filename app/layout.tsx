@@ -28,15 +28,15 @@ export const metadata: Metadata = {
 async function fetchInitialUser(headers: Headers) {
   let initialUser = null;
   // Build absolute URL
-  const host = headers.get('host');
-  const protocol = headers.get('x-forwarded-proto') || 'http';
+  const host = headers.get("host");
+  const protocol = headers.get("x-forwarded-proto") || "http";
   const baseUrl = `${protocol}://${host}`;
 
   try {
     const response = await fetch(`${baseUrl}/api/auth/user`, {
-      credentials: 'include',
+      credentials: "include",
       headers: {
-        cookie: headers.get('cookie') || '',
+        cookie: headers.get("cookie") || "",
       },
     });
     if (response.ok) {
@@ -48,18 +48,25 @@ async function fetchInitialUser(headers: Headers) {
   return initialUser;
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const headers = new Headers();
-  if (typeof window === 'undefined') { // Check if application is running locally
-    headers.set('host', process.env.HOST || 'localhost:3000');
-    headers.set('x-forwarded-proto', process.env.PROTOCOL || 'http');
+  if (typeof window === "undefined") {
+    // Check if application is running locally
+    headers.set("host", process.env.HOST || "localhost:3000");
+    headers.set("x-forwarded-proto", process.env.PROTOCOL || "http");
   }
 
   const initialUser = await fetchInitialUser(headers);
 
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Navbar initialUser={initialUser} />
         {/* <AITool /> */}
         <Botpress />
