@@ -233,11 +233,11 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
             <LineGraph data={lineGraphData} />
           </div>
         </div>
-        <div className="data-board flex flex-col w-full pl-5 sm:p-5 overflow-hidden">
-          <div className="flex flex-row content-center justify-between items-center">
-            <div className="w-full flex flex-col justify-center items-center">
+        <div className="data-board flex flex-col w-full sm:p-5 sm:pt-0 overflow-hidden">
+          <div className="flex flex-col lg:flex-row content-center justify-center items-center">
+            <div className="w-full flex flex-col justify-center items-center pb-5 px-1">
               <div className="bg-black h-fit w-fit p-3 mb-3 ">
-                <h3 className="font-helvetica text-center text-slate-100 text-4xl font-bold">
+                <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
                   Course Rating
                 </h3>
               </div>
@@ -247,8 +247,8 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
                   style={
                     {
                       "--value": overallRating,
-                      "--size": "16rem",
-                      "--thickness": "2rem",
+                      "--size": "8rem",
+                      "--thickness": "10px",
                     } as React.CSSProperties
                   }
                   role="progressbar"
@@ -259,9 +259,9 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
                 </div>
               </div>
             </div>
-            <div className="w-full flex flex-col justify-center items-center">
+            <div className="w-full flex flex-col justify-center items-center pb-5 px-1">
               <div className="bg-black h-fit w-fit p-3 mb-3">
-                <h3 className="font-helvetica text-center text-slate-100 text-4xl font-bold">
+                <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
                   Overall Rating
                 </h3>
               </div>
@@ -271,8 +271,8 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
                   style={
                     {
                       "--value": profOverallRating,
-                      "--size": "16rem",
-                      "--thickness": "2rem",
+                      "--size": "8rem",
+                      "--thickness": "10px",
                     } as React.CSSProperties
                   }
                   role="progressbar"
