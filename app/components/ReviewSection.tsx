@@ -138,7 +138,6 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courses, professorName })
                         value={professorRating}
                         onChange={(e) => setProfessorRating(Number(e.target.value))}
                         className="range [--range-shdw:red]" 
-                        step="25" 
                         required 
                       />
                       <div className="flex w-full justify-between px-2 text-xs">
@@ -159,7 +158,6 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courses, professorName })
                         value={courseRating}
                         onChange={(e) => setCourseRating(Number(e.target.value))}
                         className="range [--range-shdw:red]" 
-                        step="25" 
                         required 
                       />
                       <div className="flex w-full justify-between px-2 text-xs">
