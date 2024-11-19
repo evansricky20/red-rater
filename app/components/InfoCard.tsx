@@ -32,6 +32,9 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   const [lineGraphData, setLineGraphData] = useState<
     { term: string; rating: number }[]
   >([]); // Data for LineGraph
+  const [avgResponse1, setAvgResponse1] = useState<number>(0);
+  const [avgResponse2, setAvgResponse2] = useState<number>(0);
+  const [avgResponse3, setAvgResponse3] = useState<number>(0);
 
   const fetchProfile = async () => {
     try {
@@ -123,6 +126,9 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
           (parseFloat(selectedData.OverallRating) / 5) * 100
         );
         animateOverallRating(newOverallRating);
+        setAvgResponse1(parseFloat(selectedData.AvgResponse1));
+        setAvgResponse2(parseFloat(selectedData.AvgResponse2));
+        setAvgResponse3(parseFloat(selectedData.AvgResponse3));
       }
     }
   }, [selectedCourse, selectedTerm, data]);
@@ -161,7 +167,12 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center w-full h-96 p-5 lg:p-10 2xl:px-32 overflow-hidden text-white text-bold">
+        <span className="loading loading-spinner loading-md mx-2"></span>
+        <div className="text-xl align-middle">Loading...</div>
+      </div>
+    );
   }
 
   if (!profile) {
@@ -169,128 +180,129 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   }
 
   return (
-    <div className="flex flex-col w-full p-5 lg:p-10 2xl:px-32 overflow-hidden">
-      <div className="bg-black text-center w-full md:w-1/2 lg:w-fit p-5 overflow-hidden">
-        <h1 className="text-slate-100 text-3xl lg:text-6xl font-helvetica uppercase font-bolder max-w-5xl">
-          {profile.name}
-        </h1>
-      </div>
-      <h2 className="text-4xl text-helvetica font-bold max-w-3xl pt-1 mb-5">
-        {profile.subjectName}
-      </h2>
-      <div className="flex flex-col lg:flex-row overflow-hidden">
-        <div className="flex flex-col lg:w-full lg:pr-5">
-          <div className="flex justify-between">
-            <select
-              className="select bg-slate-50 select-bordered w-1/2 max-w-40 font-bold mr-1"
-              defaultValue=""
-              onChange={handleCourseChange}
-            >
-              <option value="" disabled>
-                Course List
-              </option>
-              {profile.courses.map((course: string) => (
-                <option key={course} value={course}>{`CS ${course}`}</option>
-              ))}
-            </select>
-            <select
-              className="select bg-slate-50 select-bordered w-1/2 max-w-40 font-bold ml-1"
-              value={selectedTerm || ""}
-              onChange={handleTermChange}
-              disabled={!selectedCourse} // Disable the term dropdown if no course is selected
-            >
-              <option value="" disabled>
-                Term
-              </option>
-              {filteredTerms.map((term) => (
-                <option key={term} value={term}>
-                  {term}
-                </option>
-              ))}
-            </select>
+    <div className="flex w-full p-5 lg:p-10 2xl:px-32 overflow-hidden">
+      <div className="w-1/2">
+        <div className="flex flex-col">
+          <div className="bg-white rounded-md shadow-md shadow-black text-center w-full md:w-1/2 lg:w-fit pt-4 pb-1 px-5 overflow-hidden">
+            <h1 className="text-slate-900 text-3xl align-middle lg:text-5xl font-helvetica uppercase font-bolder max-w-5xl">
+              {profile.name}
+            </h1>
           </div>
-          <div className="bg-black h-fit w-fit mt-5 p-3 2xl:p-5 ">
-            <h2 className="text-slate-50 text-2xl font-helvetica font-bold uppercase">
-              Smart Eval Questions
+          <div className="bg-white rounded-md shadow-md shadow-black text-center w-fit mt-4 pt-2 px-5 overflow-hidden">
+            <h2 className="text-4xl text-helvetica font-bold max-w-3xl pt-1 mb-4">
+              {profile.subjectName}
             </h2>
-          </div>
-          <div className="flex flex-col justify-center items-center my-6 w-full sm:w-auto md:mb-5">
-            <p className="flex items-center justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-ttu-gold rounded-md p-1 font-bold shadow-lg my-2">
-              The course objectives were specified and followed by the
-              instructor.
-            </p>
-            <p className="flex items-cente justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-ttu-gold rounded-md p-1 font-bold shadow-lg my-2">
-              Overall, the instructor was an effective teacher.
-            </p>
-            <p className="flex items-center justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-ttu-gold rounded-md p-1 font-bold shadow-lg my-2">
-              Overall, this course was a valuable learning experience.
-            </p>
-          </div>
-          <div className="bg-black h-fit w-fit my-5 p-3 2xl:p-5 ">
-            <h2 className="text-slate-50 text-2xl font-helvetica font-bold uppercase">
-              Ratings over Semesters
-            </h2>
-          </div>
-          <div className="w-full h-full">
-            <LineGraph data={lineGraphData} />
           </div>
         </div>
-        <div className="data-board flex flex-col w-full sm:pt-0">
-          <div className="flex flex-col content-center justify-center items-center mt-10 md:mt-0">
-            <div className="w-full flex flex-col justify-center items-center pb-5 px-1">
-              <div className="bg-black h-fit w-fit p-3 mb-3 2xl:p-5 ">
-                <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
-                  Course Rating
-                </h3>
-              </div>
-              <div className="self-center">
-                <div
-                  className="radial-progress bg-white text-ttu-gold border-4 [--size:12rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black"
-                  style={
-                    {
-                      "--value": overallRating,
-                      "--thickness": "1.5rem",
-                    } as React.CSSProperties
-                  }
-                  role="progressbar"
-                >
-                  <span className="text-black text-4xl font-semibold ">
-                    {Math.round(overallRating)}%
-                  </span>
-                </div>
-              </div>
+        <div className="flex flex-col overflow-hidden p-4">
+          <div className="flex flex-col w-full">
+            <div className="bg-gray-800 h-fit w-fit rounded-md shadow-md shadow-black mt-2 p-3 2xl:p-5">
+              <h2 className="text-slate-50 text-2xl font-helvetica font-bold uppercase">
+                Smart Eval Questions
+              </h2>
             </div>
-            <div className="w-full flex flex-col justify-center items-center pb-5 px-1">
-              <div className="bg-black h-fit w-fit p-3 mb-3 2xl:p-5">
-                <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
-                  Overall Rating
-                </h3>
-              </div>
-              <div className="self-center">
-                <div
-                  className="radial-progress bg-white text-ttu-dark-red border-4 [--size:12rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black"
-                  style={
-                    {
-                      "--value": profOverallRating,
-                      "--thickness": "1.5rem",
-                    } as React.CSSProperties
-                  }
-                  role="progressbar"
-                >
-                  <span className="text-black text-4xl font-semibold">
-                    {Math.round(profOverallRating)}%
-                  </span>
-                </div>
-              </div>
+            <div className="flex flex-col bg-ttu-dark-red justify-center items-center rounded-md shadow-md shadow-black my-6 w-full sm:w-auto md:mb-5 p-4">
+              <p className="flex items-center justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-white rounded-md px-2 font-bold shadow-lg my-2">
+                The course objectives were specified and followed by the
+                instructor.
+                <span className="ml-4">{avgResponse1}</span>
+              </p>
+              <p className="flex items-center justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-white rounded-md px-2 font-bold shadow-lg my-2">
+                Overall, the instructor was an effective teacher.
+                <span className="ml-4">{avgResponse2}</span>
+              </p>
+              <p className="flex items-center justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-white rounded-md px-2 font-bold shadow-lg my-2">
+                Overall, this course was a valuable learning experience.
+                <span className="ml-4">{avgResponse3}</span>
+              </p>
+            </div>
+            <div className="bg-gray-800 shadow-md shadow-black rounded-md h-fit w-fit my-5 p-3 2xl:p-5">
+              <h2 className="text-slate-50 text-2xl font-helvetica font-bold uppercase">
+                Ratings over Semesters
+              </h2>
+            </div>
+            <div className="w-full h-full bg-ttu-dark-red rounded-md py-4 px-2 shadow-md shadow-black">
+              <LineGraph data={lineGraphData} />
             </div>
           </div>
-          {/* <Image
-            src="/bubble_example.png"
-            alt="example bubbles"
-            width={1000}
-            height={100}
-            style={{ width: "100%", height: "100%" }}
-          /> */}
+        </div>
+      </div>
+      <div className="w-1/2 h-full flex flex-col">
+        <div className="w-full ml-auto flex justify-between items-center h-20">
+          <select
+            className="select bg-slate-50 select-bordered border-2 border-black focus:border-black focus:outline-none w-1/2 max-w-40 font-bold mr-1"
+            defaultValue=""
+            onChange={handleCourseChange}
+          >
+            <option value="" disabled>
+              Course List
+            </option>
+            {profile.courses.map((course: string) => (
+              <option key={course} value={course}>{`CS ${course}`}</option>
+            ))}
+          </select>
+          <select
+            className="select bg-slate-50 select-bordered border-2 border-black focus:border-black focus:outline-none w-1/2 max-w-40 font-bold ml-1"
+            value={selectedTerm || ""}
+            onChange={handleTermChange}
+            disabled={!selectedCourse} // Disable the term dropdown if no course is selected
+          >
+            <option value="" disabled>
+              Term
+            </option>
+            {filteredTerms.map((term) => (
+              <option key={term} value={term}>
+                {term}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="w-full flex flex-col justify-center items-center pb-5 px-1">
+          <div className="bg-gray-800 shadow-md shadow-black rounded-md h-fit w-fit p-3 mb-3 mt-10 2xl:p-5 items-center">
+            <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
+              Course Rating
+            </h3>
+          </div>
+          <div className="self-center">
+            <div
+              className="radial-progress bg-white text-ttu-gold border-4 [--size:12rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black shadow-lg shadow-black"
+              style={
+                {
+                  "--value": overallRating,
+                  "--thickness": "1.5rem",
+                } as React.CSSProperties
+              }
+              role="progressbar"
+            >
+              <span className="text-black text-4xl font-semibold ">
+                {Math.round(overallRating)}%
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="flex-grow"></div> {/* This div will take up the remaining space */}
+        <div className="w-full flex flex-col justify-center items-center pb-10 px-1">
+          <div className="bg-gray-800 shadow-md shadow-black rounded-md h-fit w-fit p-3 mb-3 2xl:p-5">
+            <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
+              Overall Rating
+            </h3>
+          </div>
+          <div className="self-center">
+            <div
+              className="radial-progress bg-white text-ttu-dark-red border-4 [--size:12rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black shadow-lg shadow-black"
+              style={
+                {
+                  "--value": profOverallRating,
+                  "--thickness": "1.5rem",
+                } as React.CSSProperties
+              }
+              role="progressbar"
+            >
+              <span className="text-black text-4xl font-semibold">
+                {Math.round(profOverallRating)}%
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

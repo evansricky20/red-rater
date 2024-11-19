@@ -72,7 +72,7 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
             />
           </div>
           <div className="bg-ttu-red w-fit h-fit m-8">
-            <h2 className="text-center font-helvetica font-normal text-4xl lg:text-6xl uppercase text-white lg:p-5">
+            <h2 className="text-center font-helvetica font-normal text-4xl lg:text-4xl uppercase text-white lg:px-5">
               Student Reviews
             </h2>
           </div>

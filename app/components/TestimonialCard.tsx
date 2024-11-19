@@ -91,13 +91,13 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ review }) => {
         </p>
         <div className="flex flex-col md:flex-row justify-center md:justify-around items-center pb-8">
           <div className="self-center flex flex-col items-center mb-5">
-            <div className="bg-black w-fit h-fit p-3 mb-3">
+            <div className="bg-gray-800 w-fit h-fit p-3 mb-3 rounded-md shadow-lg shadow-black">
               <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-3xl font-bold">
                 Professor Rating
               </h3>
             </div>
             <div
-              className="radial-progress bg-ttu-red text-ttu-gold border-4 border-black [--size:12rem] 2xl:[--size:15rem] shadow-2xl"
+              className="radial-progress bg-ttu-red text-ttu-gold border-4 border-black [--size:12rem] 2xl:[--size:15rem] shadow-2xl shadow-black"
               style={
                 {
                   "--value": review.professorRating,
@@ -112,13 +112,13 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ review }) => {
             </div>
           </div>
           <div className="self-center flex flex-col items-center mb-5">
-            <div className="bg-black w-fit h-fit p-3 mb-3">
+            <div className="bg-gray-800 w-fit h-fit p-3 mb-3 rounded-md shadow-lg shadow-black">
               <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-3xl font-bold">
                 Course Rating
               </h3>
             </div>
             <div
-              className="radial-progress bg-ttu-red text-ttu-gold border-4 border-black [--size:12rem] 2xl:[--size:15rem] shadow-2xl"
+              className="radial-progress bg-ttu-red text-ttu-gold border-4 border-black [--size:12rem] 2xl:[--size:15rem] shadow-2xl shadow-black"
               style={
                 {
                   "--value": review.courseRating,
