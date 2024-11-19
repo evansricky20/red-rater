@@ -4,15 +4,7 @@ import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 
 // Home Page
-const Home = ({
-  searchParams,
-}: {
-  searchParams?: {
-    query?: string;
-  };
-}) => {
-  const query = searchParams?.query || "";
-  // console.log("query", query);
+const Home = () => {
   return (
     <main className="h-screen pt-20">
       <div className="bg-hero bg-cover bg-center h-full w p-2 flex flex-col content-center items-center">
