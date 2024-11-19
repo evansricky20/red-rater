@@ -3,6 +3,7 @@ import Link from "next/link";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import { Montserrat } from "next/font/google";
+import SearchList from "./components/SearchList";
 
 const montserrat = Montserrat({
   subsets: ["latin"], // Adjust this based on your language requirements
@@ -10,7 +11,15 @@ const montserrat = Montserrat({
 });
 
 // Home Page
-export default function Home() {
+const Home = ({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+  };
+}) => {
+  const query = searchParams?.query || "";
+  // console.log("query", query);
   return (
     <main className="h-screen pt-20">
       <div className="bg-hero bg-cover bg-center h-full w p-2 flex flex-col content-center items-center">
@@ -36,6 +45,7 @@ export default function Home() {
         </p>
         <div className="pt-10 w-auto sm:w-1/2 lg:w-2/5 2xl:w-1/4">
           <SearchBar />
+          <SearchList query={query} />
         </div>
         <label
           htmlFor="ai-drawer"
@@ -47,4 +57,6 @@ export default function Home() {
       </div>
     </main>
   );
-}
+};
+
+export default Home;
