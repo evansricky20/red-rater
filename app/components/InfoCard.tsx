@@ -171,18 +171,18 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   return (
     <div className="flex flex-col w-full p-5 lg:p-10 2xl:px-32 overflow-hidden">
       <div className="bg-black text-center w-full md:w-1/2 lg:w-fit p-5 overflow-hidden">
-        <h1 className="text-slate-100 text-3xl lg:text-6xl font-helvetica uppercase font-black max-w-5xl">
+        <h1 className="text-slate-100 text-3xl lg:text-6xl font-helvetica uppercase font-bolder max-w-5xl">
           {profile.name}
         </h1>
       </div>
-      <h2 className="text-3xl text-helvetica font-bold max-w-3xl px-1 pb-2">
+      <h2 className="text-4xl text-helvetica font-bold max-w-3xl pt-1 mb-5">
         {profile.subjectName}
       </h2>
       <div className="flex flex-col lg:flex-row overflow-hidden">
-        <div className="flex flex-col lg:w-full lg:px-5">
+        <div className="flex flex-col lg:w-full lg:pr-5">
           <div className="flex justify-between">
             <select
-              className="select bg-white select-bordered w-1/2 max-w-40 font-bold mr-1"
+              className="select bg-slate-50 select-bordered w-1/2 max-w-40 font-bold mr-1"
               defaultValue=""
               onChange={handleCourseChange}
             >
@@ -194,7 +194,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               ))}
             </select>
             <select
-              className="select bg-white select-bordered w-1/2 max-w-40 font-bold ml-1"
+              className="select bg-slate-50 select-bordered w-1/2 max-w-40 font-bold ml-1"
               value={selectedTerm || ""}
               onChange={handleTermChange}
               disabled={!selectedCourse} // Disable the term dropdown if no course is selected
@@ -209,6 +209,11 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               ))}
             </select>
           </div>
+          <div className="bg-black h-fit w-fit mt-5 p-3 2xl:p-5 ">
+            <h2 className="text-slate-50 text-2xl font-helvetica font-bold uppercase">
+              Smart Eval Questions
+            </h2>
+          </div>
           <div className="flex flex-col justify-center items-center my-6 w-full sm:w-auto md:mb-5">
             <p className="flex items-center justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-ttu-gold rounded-md p-1 font-bold shadow-lg my-2">
               The course objectives were specified and followed by the
@@ -220,6 +225,11 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
             <p className="flex items-center justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-ttu-gold rounded-md p-1 font-bold shadow-lg my-2">
               Overall, this course was a valuable learning experience.
             </p>
+          </div>
+          <div className="bg-black h-fit w-fit my-5 p-3 2xl:p-5 ">
+            <h2 className="text-slate-50 text-2xl font-helvetica font-bold uppercase">
+              Ratings over Semesters
+            </h2>
           </div>
           <div className="w-full h-full">
             <LineGraph data={lineGraphData} />
@@ -235,11 +245,11 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               </div>
               <div className="self-center">
                 <div
-                  className="radial-progress bg-white text-ttu-gold border-4 [--size:11rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black"
+                  className="radial-progress bg-white text-ttu-gold border-4 [--size:12rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black"
                   style={
                     {
                       "--value": overallRating,
-                      "--thickness": "10px",
+                      "--thickness": "1.5rem",
                     } as React.CSSProperties
                   }
                   role="progressbar"
@@ -258,11 +268,11 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               </div>
               <div className="self-center">
                 <div
-                  className="radial-progress bg-white text-ttu-red border-4 [--size:11rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black"
+                  className="radial-progress bg-white text-ttu-dark-red border-4 [--size:12rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black"
                   style={
                     {
                       "--value": profOverallRating,
-                      "--thickness": "10px",
+                      "--thickness": "1.5rem",
                     } as React.CSSProperties
                   }
                   role="progressbar"

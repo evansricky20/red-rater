@@ -49,13 +49,13 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
   return (
     <main className="h-screen overflow-x-hidden">
       <div className="bg-hero bg-cover bg-center pt-20 overflow-x-hidden">
-        <section className="info-section bg-ttu-red h-fit w-full lg:w-10/12 lg:rounded-tl-lg lg:rounded-tr-lg flex justify-center mx-auto lg:mt-10">
+        <section className="info-section bg-ttu-red h-fit w-full lg:w-3/4 lg:rounded-tl-lg lg:rounded-tr-lg flex justify-center mx-auto lg:mt-10">
           <InfoCard searchTerm={searchTerm} profile={transformedProfile} />
         </section>
       </div>
       <section className="testimonial-section h-fit flex flex-col justify-center mx-auto">
-        <div className="flex-1 content-center border-b-4 border-black bg-ttu-red font-bold">
-          <div className="lineart-element flex">
+        <div className="flex h-fit flex-col items-center justify-center bg-ttu-red font-bold">
+          <div className="lineart-element flex w-full">
             <Image
               src="/TTU_Horizontal_Lineart_black.png"
               alt="TTU line art decal."
@@ -64,16 +64,18 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
               style={{ width: "50%", height: "100%" }}
             />
             <Image
-              src="/TTU_Horizontal_Lineart_white.png"
+              src="/TTU_Horizontal_Lineart_black.png"
               alt="TTU line art decal."
               width={1000}
               height={100}
               style={{ width: "50%", height: "100%" }}
             />
           </div>
-          <h2 className="text-center font-helvetica font-black text-5xl text-white p-4">
-            Student Testimonials
-          </h2>
+          <div className="bg-ttu-red w-fit h-fit m-8">
+            <h2 className="text-center font-helvetica font-normal text-4xl lg:text-6xl uppercase text-white lg:p-5">
+              Student Reviews
+            </h2>
+          </div>
         </div>
         <ReviewSection
           courses={transformedProfile.courses}

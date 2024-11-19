@@ -74,7 +74,7 @@ const Navbar = ({
           {/* putting label for my-drawer in navbar. htmlfor to connect to drawer */}
           <label
             htmlFor="my-drawer"
-            className="btn btn-ghost z-50 hover:scale-110 hover:bg-transparent"
+            className="btn btn-ghost z-50 hover:scale-110 hover:bg-transparent lg:ml-52"
           >
             <Image
               src="/burger.svg"
@@ -129,7 +129,9 @@ const Navbar = ({
                     <a className="hover:bg-gray-600">Edit Profile</a>
                   </li>
                   <li>
-                    <a className="hover:bg-gray-600" onClick={logout}>Logout</a>
+                    <a className="hover:bg-gray-600" onClick={logout}>
+                      Logout
+                    </a>
                   </li>
                 </ul>
               </div>

@@ -123,7 +123,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
         setSelectedCourse("");
         setProfessorRating(25);
         setCourseRating(25);
-        setReviewContent('');
+        setReviewContent("");
 
         // Fetch the updated reviews
         fetchReviews();
@@ -158,9 +158,9 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
   });
 
   return (
-    <div>
-      <div className="w-2/3 mx-auto">
-        <div className="testimonial-buttons w-7/12 ml-auto flex justify-between py-5 px-6">
+    <div className="bg-slate-50">
+      <div className="w-full px-2 mx-auto lg:w-4/5 2xl:w-3/5">
+        <div className="testimonial-buttons w-full ml-auto flex justify-between py-5">
           <dialog
             id="review_modal"
             className="modal modal-bottom sm:modal-middle"
@@ -207,7 +207,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
                         <span className="text-red-600">*</span>
                       </h4>
                       <p className="italic text-gray-400">
-                        Click and drag to set your rating
+                        Click and drag to set your rating.
                       </p>
                       <input
                         type="range"
@@ -234,7 +234,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
                         <span className="text-red-600">*</span>
                       </h4>
                       <p className="italic text-gray-400">
-                        Click and drag to set your rating
+                        Click and drag to set your rating.
                       </p>
                       <input
                         type="range"
@@ -271,7 +271,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
                     <div className="flex justify-center">
                       <button
                         type="submit"
-                        className="btn bg-red-600 text-white w-1/2"
+                        className="btn bg-ttu-red text-white w-1/2"
                       >
                         Submit
                       </button>
@@ -292,21 +292,39 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
             <Image src="/plus.svg" alt="Plus symbol" width={20} height={20} />
           </button>
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-outline place-self-center border-2 m-1">
-              Filter 
-              <Image src="/filter.svg" alt="Filter symbol" width={20} height={20} />
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-outline place-self-center border-2 m-1"
+            >
+              Filter
+              <Image
+                src="/filter.svg"
+                alt="Filter symbol"
+                width={20}
+                height={20}
+              />
             </div>
-            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
               <li>
                 <a
-                  className={`${filter === "Date" ? "bg-gray-200" : ""} hover:bg-gray-300`}
+                  className={`${
+                    filter === "Date" ? "bg-gray-200" : ""
+                  } hover:bg-gray-300`}
                   onClick={() => handleFilterChange("Date")}
                 >
                   Date
                   {filter === "Date" && (
                     <Image
                       className="ml-auto"
-                      src={sortOrder === "asc" ? "/caret-up.svg" : "/caret-down.svg"}
+                      src={
+                        sortOrder === "asc"
+                          ? "/caret-up.svg"
+                          : "/caret-down.svg"
+                      }
                       alt={sortOrder === "asc" ? "Ascending" : "Descending"}
                       width={20}
                       height={20}
@@ -316,14 +334,20 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
               </li>
               <li>
                 <a
-                  className={`${filter === "Course Rating" ? "bg-gray-200" : ""} hover:bg-gray-300`}
+                  className={`${
+                    filter === "Course Rating" ? "bg-gray-200" : ""
+                  } hover:bg-gray-300`}
                   onClick={() => handleFilterChange("Course Rating")}
                 >
                   Course Rating
                   {filter === "Course Rating" && (
                     <Image
                       className="ml-auto"
-                      src={sortOrder === "asc" ? "/caret-up.svg" : "/caret-down.svg"}
+                      src={
+                        sortOrder === "asc"
+                          ? "/caret-up.svg"
+                          : "/caret-down.svg"
+                      }
                       alt={sortOrder === "asc" ? "Ascending" : "Descending"}
                       width={20}
                       height={20}
@@ -333,14 +357,20 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
               </li>
               <li>
                 <a
-                  className={`${filter === "Professor Rating" ? "bg-gray-200" : ""} hover:bg-gray-300`}
+                  className={`${
+                    filter === "Professor Rating" ? "bg-gray-200" : ""
+                  } hover:bg-gray-300`}
                   onClick={() => handleFilterChange("Professor Rating")}
                 >
                   Professor Rating
                   {filter === "Professor Rating" && (
                     <Image
                       className="ml-auto"
-                      src={sortOrder === "asc" ? "/caret-up.svg" : "/caret-down.svg"}
+                      src={
+                        sortOrder === "asc"
+                          ? "/caret-up.svg"
+                          : "/caret-down.svg"
+                      }
                       alt={sortOrder === "asc" ? "Ascending" : "Descending"}
                       width={20}
                       height={20}

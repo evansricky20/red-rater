@@ -24,7 +24,7 @@ const LineGraph: React.FC<LineGraphProps> = ({ data }) => {
   };
 
   return (
-    <ResponsiveContainer aspect={2}>
+    <ResponsiveContainer aspect={2.5}>
       <LineChart
         margin={{ top: 10, right: 50, bottom: 0, left: 0 }}
         data={data}
@@ -46,7 +46,7 @@ const LineGraph: React.FC<LineGraphProps> = ({ data }) => {
         <YAxis stroke="#000000" strokeWidth={2} />
         <Tooltip
           contentStyle={{
-            backgroundColor: "#cc0000",
+            backgroundColor: "#E90802",
             borderColor: "#000000",
             borderWidth: "2px",
           }}
