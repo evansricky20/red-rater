@@ -26,7 +26,7 @@ const LineGraph: React.FC<LineGraphProps> = ({ data }) => {
   return (
     <ResponsiveContainer aspect={2}>
       <LineChart
-        margin={{ top: 10, right: 50, bottom: 10, left: 0 }}
+        margin={{ top: 10, right: 50, bottom: 0, left: 0 }}
         data={data}
       >
         <Line

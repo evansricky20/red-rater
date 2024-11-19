@@ -171,7 +171,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
   return (
     <div className="flex flex-col w-full p-5 lg:p-10 2xl:px-32 overflow-hidden">
       <div className="bg-black text-center w-full md:w-1/2 lg:w-fit p-5 overflow-hidden">
-        <h1 className="text-slate-100 text-2xl lg:text-6xl font-helvetica uppercase font-black max-w-5xl">
+        <h1 className="text-slate-100 text-3xl lg:text-6xl font-helvetica uppercase font-black max-w-5xl">
           {profile.name}
         </h1>
       </div>
@@ -209,69 +209,59 @@ const InfoCard: React.FC<InfoCardProps> = ({ searchTerm, profile }) => {
               ))}
             </select>
           </div>
-          <div className="grid grid-cols-2 gap-4 my-4 w-full sm:w-auto ">
-            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
-              Descriptor
+          <div className="flex flex-col justify-center items-center my-6 w-full sm:w-auto md:mb-5">
+            <p className="flex items-center justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-ttu-gold rounded-md p-1 font-bold shadow-lg my-2">
+              The course objectives were specified and followed by the
+              instructor.
             </p>
-            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
-              Descriptor
+            <p className="flex items-cente justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-ttu-gold rounded-md p-1 font-bold shadow-lg my-2">
+              Overall, the instructor was an effective teacher.
             </p>
-            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
-              Descriptor
-            </p>
-            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
-              Descriptor
-            </p>
-            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
-              Descriptor
-            </p>
-            <p className="flex items-center justify-center w-fit  bg-gray-400 rounded-md h-10 p-1 font-bold">
-              Descriptor
+            <p className="flex items-center justify-center w-10/12 h-fit text-lg 2xl:text-2xl bg-ttu-gold rounded-md p-1 font-bold shadow-lg my-2">
+              Overall, this course was a valuable learning experience.
             </p>
           </div>
           <div className="w-full h-full">
             <LineGraph data={lineGraphData} />
           </div>
         </div>
-        <div className="data-board flex flex-col w-full sm:p-5 sm:pt-0 overflow-hidden">
-          <div className="flex flex-col lg:flex-row content-center justify-center items-center">
+        <div className="data-board flex flex-col w-full sm:pt-0">
+          <div className="flex flex-col content-center justify-center items-center mt-10 md:mt-0">
             <div className="w-full flex flex-col justify-center items-center pb-5 px-1">
-              <div className="bg-black h-fit w-fit p-3 mb-3 ">
+              <div className="bg-black h-fit w-fit p-3 mb-3 2xl:p-5 ">
                 <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
                   Course Rating
                 </h3>
               </div>
               <div className="self-center">
                 <div
-                  className="radial-progress bg-white text-ttu-red border-4 border-black"
+                  className="radial-progress bg-white text-ttu-gold border-4 [--size:11rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black"
                   style={
                     {
                       "--value": overallRating,
-                      "--size": "8rem",
                       "--thickness": "10px",
                     } as React.CSSProperties
                   }
                   role="progressbar"
                 >
-                  <span className="text-black text-4xl font-semibold">
+                  <span className="text-black text-4xl font-semibold ">
                     {Math.round(overallRating)}%
                   </span>
                 </div>
               </div>
             </div>
             <div className="w-full flex flex-col justify-center items-center pb-5 px-1">
-              <div className="bg-black h-fit w-fit p-3 mb-3">
+              <div className="bg-black h-fit w-fit p-3 mb-3 2xl:p-5">
                 <h3 className="font-helvetica text-center text-slate-100 text-3xl 2xl:text-4xl font-bold">
                   Overall Rating
                 </h3>
               </div>
               <div className="self-center">
                 <div
-                  className="radial-progress bg-white text-ttu-gold border-4 border-black"
+                  className="radial-progress bg-white text-ttu-red border-4 [--size:11rem] sm:[--size:16rem] lg:[--size:12rem] 2xl:[--size:18rem] border-black"
                   style={
                     {
                       "--value": profOverallRating,
-                      "--size": "8rem",
                       "--thickness": "10px",
                     } as React.CSSProperties
                   }
