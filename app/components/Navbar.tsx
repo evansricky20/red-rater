@@ -10,16 +10,21 @@ import Login from "./Login";
 const Navbar = ({
   initialUser,
 }: {
-  initialUser: { fname: string; lname: string } | null;
+  initialUser: { email: string; fname: string; lname: string } | null;
 }) => {
   // State variables
-  const [user, setUser] = useState<{ fname: string; lname: string } | null>(
+  const [user, setUser] = useState<{ email: string; fname: string; lname: string } | null>(
     initialUser
   );
   const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    email: user?.email || "",
+    fname: user?.fname || "",
+    lname: user?.lname || "",
+    password: "",
+  });
 
   useEffect(() => {
-    // Fetch user details from API if not provided by SSR
     if (!initialUser) {
       const fetchUser = async () => {
         try {
@@ -27,6 +32,12 @@ const Navbar = ({
           if (response.ok) {
             const data = await response.json();
             setUser(data);
+            setFormData({
+              email: data.email,
+              fname: data.fname,
+              lname: data.lname,
+              password: "",
+            });
           }
         } catch (error) {
           console.error("Failed to fetch user:", error);
@@ -40,6 +51,38 @@ const Navbar = ({
       setLoading(false);
     }
   }, [initialUser]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/auth/user/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        const updatedUser = await response.json();
+        setUser(updatedUser.user);
+        alert("Profile updated successfully");
+        // Call logout function after successful update
+        await logout();
+      } else {
+        alert("Failed to update profile");
+      }
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+    }
+  };
 
   // Function for handling logout
   const logout = async () => {
@@ -64,6 +107,92 @@ const Navbar = ({
       <Signup />
       {/* Login Modal */}
       <Login />
+      {/* Account Management Modal */}
+      <dialog
+        id="account_modal"
+        className="modal modal-bottom sm:modal-middle"
+      >
+        <div className="modal-box relative">
+          <div className="banner border-b-4 border-solid border-black flex p-2">
+            <h2 className="font-bold text-6xl p-4 me-auto">Red Rater</h2>
+            <Image
+              src="/DoubleT_BlkWht.png"
+              alt="Black and white Texas Tech Double T"
+              width={100}
+              height={100}
+              style={{ width: "20%", height: "20%" }}
+            />
+          </div>
+          <div className="modal-action flex flex-col w-full">
+            <form className="w-full" onSubmit={handleSubmit}>
+              <div>
+                <h4 className="font-bold text-xl">Full Name</h4>
+                <div className="flex justify-between mb-2">
+                  <div>
+                    <label className="input input-bordered flex items-center gap-2 mb-2">
+                      <input
+                        type="text"
+                        name="fname"
+                        className="grow"
+                        value={formData.fname}
+                        onChange={handleInputChange}
+                      />
+                    </label>
+                    <p className="text-gray-400">First Name</p>
+                  </div>
+                  <div>
+                    <label className="input input-bordered flex items-center gap-2 mb-2">
+                      <input
+                        type="text"
+                        name="lname"
+                        className="grow"
+                        value={formData.lname}
+                        onChange={handleInputChange}
+                      />
+                    </label>
+                    <p className="text-gray-400">Last Name</p>
+                  </div>
+                </div>
+                <div className="pb-2">
+                  <h4 className="font-bold text-xl">Email</h4>
+                  <label className="input input-bordered flex items-center gap-2 mb-4">
+                    <input
+                      type="text"
+                      name="email"
+                      className="grow"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </div>
+                <div className="pb-2">
+                  <h4 className="font-bold text-xl">Password</h4>
+                  <label className="input input-bordered flex items-center gap-2 mb-4">
+                    <input
+                      type="password"
+                      name="password"
+                      className="grow"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </div>
+                <div className="flex justify-center">
+                  <button
+                    type="submit"
+                    className="btn bg-ttu-red text-white w-1/2"
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
 
       {/* drawer-toggle: makes checkbox hidden and controls the drawer */}
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -74,7 +203,7 @@ const Navbar = ({
           {/* putting label for my-drawer in navbar. htmlfor to connect to drawer */}
           <label
             htmlFor="my-drawer"
-            className="btn btn-ghost z-50 hover:scale-110 hover:bg-transparent lg:ml-52"
+            className="btn btn-ghost z-50 hover:scale-110 hover:bg-transparent"
           >
             <Image
               src="/burger.svg"
@@ -126,7 +255,14 @@ const Navbar = ({
                   className="text-white dropdown-content menu bg-gray-900 rounded-box z-[1] w-52 p-2 shadow"
                 >
                   <li>
-                    <a className="hover:bg-gray-600">Edit Profile</a>
+                    <a 
+                    className="hover:bg-gray-600" 
+                    onClick={() => {
+                      const modal = document.getElementById("account_modal");
+                      if (modal) {
+                        (modal as HTMLDialogElement).showModal();
+                      }
+                    }} >Edit Profile</a>
                   </li>
                   <li>
                     <a className="hover:bg-gray-600" onClick={logout}>

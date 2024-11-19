@@ -11,11 +11,12 @@ export async function GET(request: Request) {
     const user = await verifyJWT(token);
 
     // Validate object
-    if (!user || typeof user !== 'object' || !('fname' in user) || !('lname' in user)) {
+    if (!user || typeof user !== 'object' || !('email' in user) || !('fname' in user) || !('lname' in user)) {
       return NextResponse.json({ message: 'Invalid token' }, { status: 403 });
     }
 
     return NextResponse.json({
+      email: user.email,
       fname: user.fname,
       lname: user.lname,
     });
