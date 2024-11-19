@@ -47,7 +47,7 @@ const Dashboard = async ({ params, searchParams }: DashboardProps) => {
   };
 
   return (
-    <main className="h-screen overflow-x-hidden">
+    <main className="h-screen overflow-x-hidden bg-slate-50">
       <div className="bg-hero bg-cover bg-center pt-20 overflow-x-hidden">
         <section className="info-section bg-ttu-red h-fit w-full lg:w-3/4 lg:rounded-tl-lg lg:rounded-tr-lg flex justify-center mx-auto lg:mt-10">
           <InfoCard searchTerm={searchTerm} profile={transformedProfile} />
